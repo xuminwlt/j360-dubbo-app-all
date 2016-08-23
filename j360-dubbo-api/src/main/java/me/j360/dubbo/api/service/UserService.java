@@ -1,0 +1,11 @@
+package me.j360.dubbo.api.service;
+
+/**
+ * Package: me.j360.dubbo.api
+ * User: min_xu
+ * Date: 16/8/23 下午2:26
+ * 说明：
+ */
+public interface UserService {
+
+}

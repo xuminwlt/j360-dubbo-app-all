@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pajk.ic.dao.mapper.CardPassDOMapper" >
+
+  <resultMap id="CardPassDO" type="com.pajk.ic.api.model.domain.item.CardPassDO" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="item_id" property="itemId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="batch_id" property="batchId" jdbcType="BIGINT" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+    <result column="secret" property="secret" jdbcType="VARCHAR" />
+    <result column="gmt_effect_begin" property="gmtEffectBegin" jdbcType="TIMESTAMP" />
+    <result column="gmt_effect_end" property="gmtEffectEnd" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="BIGINT" />
+    <result column="feature" property="feature" jdbcType="LONGVARCHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_update" property="gmtUpdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="column_names" >
+    id, type, item_id, user_id, goods_id, batch_id, card_no, secret, gmt_effect_begin, gmt_effect_end,
+    status, version, gmt_create, gmt_update
+  </sql>
+
+  <select id="getById" resultMap="CardPassDO" >
+    SELECT
+      <include refid="column_names" />
+    FROM card_pass where secret=#{secret}
+  </select>
+
+  <update id="updateStatus" parameterType="map">
+  	update card_pass set
+      user_id=#{userId},
+      version=version+1,
+      gmt_update=now(),
+      status=#{status}
+  	where secret=#{secret} and version=#{version}
+  </update>
+  
+</mapper>
