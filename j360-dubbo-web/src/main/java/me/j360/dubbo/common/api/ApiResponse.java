@@ -1,5 +1,6 @@
 package me.j360.dubbo.common.api;
 
+import com.app.exception.UnCheckedWebException;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
@@ -7,70 +8,59 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.servlet.support.RequestContext;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Slf4j
-public class ApiResponse<D> extends Response {
+public class ApiResponse<D> extends BaseResponse {
 
     @Getter
-    private Object data;
+    protected D data;
 
-    private ApiResponse() {
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
-    private ApiResponse(D data) {
+    public static ApiResponse createResponse() {
+        return newBuilder().data(null).status(ApiStatus.SUCCESS).error("").build();
+    }
+
+    public static <D> ApiResponse createResponse(D data) {
+        return newBuilder().data(data).status(ApiStatus.SUCCESS).error("").build();
+    }
+
+    protected ApiResponse(D data, int status, String error) {
+        super(status, error);
         this.data = data;
     }
 
-    private ApiResponse(List<D> list) {
-        this.data = new ListData<D>(list);
-    }
+    public static class Builder<D> extends BaseResponse.Builder {
 
-    private ApiResponse(Integer total, List<D> list) {
-        this.data = new ListData<D>(total, list);
-    }
+        private D data;
 
-    /**
-     * 创建成功响应
-     *
-     * @return 响应
-     */
-    public static ApiResponse createRestResponse() {
-        return new ApiResponse();
-    }
+        @Override
+        protected Builder getThis() {
+            return this;
+        }
 
-    /**
-     * 创建包含数据的响应
-     *
-     * @param data 数据
-     * @param <D>  类型
-     * @return 响应
-     */
-    public static <D> ApiResponse createRestResponse(D data) {
-        return new ApiResponse(data);
-    }
+        @Override
+        public ApiResponse build() {
+            return new ApiResponse(data, status, error);
+        }
 
-    /**
-     * 创建包含列表数据的响应
-     *
-     * @param list 列表数据
-     * @param <D>  类型
-     * @return 响应
-     */
-    public static <D> ApiResponse createRestResponse(List<D> list) {
-        return new ApiResponse(list);
-    }
+        public Builder data(D data) {
+            this.data = data;
+            return this;
+        }
 
-    /**
-     * 创建包含列表数据的响应
-     *
-     * @param total 总条数
-     * @param list  列表数据
-     * @param <D>   类型
-     * @return 响应
-     */
-    public static <D> ApiResponse createRestResponse(Integer total, List<D> list) {
-        return new ApiResponse(total, list);
+        @Override
+        public Builder status(Integer status) {
+            this.status = status;
+            return this;
+        }
+        @Override
+        public Builder error(String error) {
+            this.error = error;
+            return this;
+        }
     }
 
 
@@ -81,12 +71,12 @@ public class ApiResponse<D> extends Response {
      * @return
      */
     public static ApiResponse createRestResponse(UnCheckedWebException exception, HttpServletRequest request) {
-        ApiResponse restResponse = new ApiResponse();
+        Builder builder = newBuilder();
         if (null != exception) {
-            restResponse.setStatus(exception.getExceptionCode());
-            restResponse.setError(getMessage(String.valueOf(restResponse.getStatus()),request));
+            builder.status(exception.getExceptionCode());
+            builder.error(getMessage(String.valueOf(builder.getThis().status), request));
         }
-        return restResponse;
+        return builder.data(null).build();
     }
 
     /**
@@ -96,41 +86,22 @@ public class ApiResponse<D> extends Response {
      * @return 响应
      */
     public static ApiResponse createRestResponse(BindException exception, HttpServletRequest request) {
-        ApiResponse restResponse = new ApiResponse();
+        Builder builder = newBuilder();
         if (null != exception && exception.hasErrors()) {
             StringBuilder error = new StringBuilder("");
             for (ObjectError objectError : exception.getAllErrors()) {
                 error.append(objectError.getDefaultMessage() + ";");
             }
             log.error(error.toString());
-            restResponse.setStatus(ApiStatus.SY_API_REQUEST_PARAM_ERROR);
-            restResponse.setError(getMessage(String.valueOf(restResponse.getStatus()),request));
+            builder.status(ApiStatus.SY_API_REQUEST_PARAM_ERROR);
+            builder.error(getMessage(String.valueOf(builder.getThis().status),request));
         }
-
-        return restResponse;
+        return builder.data(null).build();
     }
 
     private static String getMessage(String code,HttpServletRequest request){
         RequestContext requestContext = new RequestContext(request);
         return requestContext.getMessage(String.valueOf(code));
-    }
-
-    private static class ListData<D> {
-
-        @Getter
-        private Integer total;
-
-        @Getter
-        private List<D> list;
-
-        private ListData(List<D> list) {
-            this(list.size(), list);
-        }
-
-        private ListData(Integer total, List<D> list) {
-            this.total = total;
-            this.list = list;
-        }
     }
 
 }

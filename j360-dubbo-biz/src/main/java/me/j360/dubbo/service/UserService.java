@@ -120,4 +120,37 @@ public class UserService {
         }
     }
 
+    public UserServeTransVOResult queryUserServeTrans(@ApiAutowired(CommonParameter.userId) long userId, @ApiParameter(required = true, name = "pageNo", desc = "当前页号") int pageNo, @ApiParameter(required = true, name = "pageSize", desc = "页面大小") int pageSize, @ApiParameter(required = true, name = "startDate", desc = "开始日期") long startDate, @ApiParameter(required = true, name = "endDate", desc = "结束日期") long endDate) {
+        try{
+            return cardServiceProxy.queryUserServeTrans(userId,pageNo,pageSize);
+        }catch(Throwable th){
+            String errorMsg = String.format("queryUserServeTrans(userId[%d],pageNo[%d],pageSize[%d])", userId,pageNo,pageSize);
+            Log.error(errorMsg,th);
+        }
+        return null;
+    }
+
+    public boolean bindCard(@ApiAutowired(CommonParameter.userId) long userId, @ApiParameter(required = true, name = "cardSecret", desc = "新手卡卡密码", rsaEncrypted = true) String cardSercret) {
+        try{
+            CardSecretBindResult cardSecretBindResult = cardServiceProxy.bindCard(userId,cardSercret);
+            if(!cardSecretBindResult.isSuccess()){
+                return false;
+            }
+            if(cardSecretBindResult.getResultCode() == 1){//绑定成功
+                return true;
+            }
+            if(cardSecretBindResult.getResultCode() == 2){//已经绑定
+                DubboExtProperty.setErrorCode(CardReturnCode.CARD_BOUND);
+                return false;
+            }else{
+                DubboExtProperty.setErrorCode(CardReturnCode.CARD_UNKNOW);
+                return false;
+            }
+        }catch(Throwable th){
+            String errorMsg = String.format("bindCard(userId[%d])", userId);
+            Log.error(errorMsg,th);
+        }
+        return false;
+    }
+
 }
