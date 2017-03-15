@@ -10,6 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>j360-dubbo-base</artifactId>
-
+    <description>工程的基础包,和其他工程不共享</description>
 
 </project>

@@ -10,6 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>j360-dubbo-autotest</artifactId>
-
+    <description>自动化测试包</description>
 
 </project>

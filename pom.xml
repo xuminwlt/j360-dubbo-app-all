@@ -17,6 +17,7 @@
         <module>j360-dubbo-trace</module>
         <module>j360-dubbo-springfox</module>
         <module>j360-dubbo-autotest</module>
+        <module>j360-dubbo-modules</module>
     </modules>
 
 

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>j360-dubbo-trace</artifactId>
-    <description>基于dubbo的轻量级链路跟踪模块</description>
+    <artifactId>j360-dubbo-modules</artifactId>
+    <description>工程的辅助型三方包,代码从其他开源项目中引入,保留了作者,可外部共享</description>
 
 </project>

@@ -10,6 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>j360-dubbo-web</artifactId>
-
+    <description>对外提供http的web包</description>
 
 </project>

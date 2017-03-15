@@ -10,6 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>j360-dubbo-biz</artifactId>
-
+    <description>业务实现包</description>
 
 </project>
