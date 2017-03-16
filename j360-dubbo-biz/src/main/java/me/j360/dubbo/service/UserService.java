@@ -2,6 +2,7 @@ package me.j360.dubbo.service;
 
 import com.sun.javafx.tools.packager.Log;
 import me.j360.dubbo.api.constant.ErrorCode;
+import me.j360.dubbo.api.model.param.user.UserDTO;
 import me.j360.dubbo.api.model.result.user.UserAddResult;
 import me.j360.dubbo.api.model.result.user.UserInfoResult;
 import me.j360.dubbo.api.model.result.user.UserListResult;
@@ -18,7 +19,7 @@ import me.j360.dubbo.exception.ArgumentException;
  */
 public class UserServiceImpl implements UserService {
 
-    public UserInfoResult getUserInfo() {
+    public UserInfoResult getUserInfo(UserDTO options) {
         try{
             UserInfoResult result = new UserInfoResult();
             if(options == null){
@@ -70,7 +71,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public UserListResult listUser() {
+    public UserListResult listUser(UserDTO options) {
         try{
             UserListResult result = new UserListResult();
             if(options == null){

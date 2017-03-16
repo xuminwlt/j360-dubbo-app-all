@@ -1,17 +1,6 @@
 package me.j360.dubbo.manager;
 
-import com.pajk.ic.api.model.domain.item.*;
-import com.pajk.ic.api.model.enums.UserVoucherPassStatus;
-import com.pajk.ic.api.model.enums.VoucherEffectType;
-import com.pajk.ic.api.model.enums.VoucherPassType;
-import com.pajk.ic.api.model.param.item.UserVoucherBindDTO;
-import com.pajk.ic.api.model.param.item.UserVoucherPassDTO;
-import com.pajk.ic.api.model.result.ErrorCode;
-import com.pajk.ic.api.model.result.item.UserVoucherBindResult;
-import com.pajk.ic.api.model.result.item.UserVoucherItemListQueryResult;
-import com.pajk.ic.api.model.result.item.VoucherQueryResult;
-import com.pajk.ic.repository.*;
-import com.pajk.ic.util.TimeUtils;
+import me.j360.dubbo.api.constant.ErrorCode;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

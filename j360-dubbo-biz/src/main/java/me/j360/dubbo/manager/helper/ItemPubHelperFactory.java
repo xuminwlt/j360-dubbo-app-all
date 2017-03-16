@@ -1,6 +1,5 @@
 package me.j360.dubbo.manager.helper;
 
-import com.pajk.ic.api.model.enums.ItemPublishType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ItemPubHelperFactory {

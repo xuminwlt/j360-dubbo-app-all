@@ -1,5 +1,7 @@
 package me.j360.dubbo.manager;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +11,10 @@ import java.util.List;
  * Date: 16/8/23 下午2:53
  * 说明：
  */
+
+@Slf4j
 public class UserManager {
 
-
-    private static final Logger Log = LoggerFactory.getLogger(ItemPubManager.class);
     @Autowired
     private ItemPubHelperFactory itemPubHelperFactory;
     @Autowired

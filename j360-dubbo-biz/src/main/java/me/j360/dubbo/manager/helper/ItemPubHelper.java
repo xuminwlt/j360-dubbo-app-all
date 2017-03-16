@@ -1,18 +1,5 @@
 package me.j360.dubbo.manager.helper;
 
-import com.pajk.ic.api.model.domain.item.*;
-import com.pajk.ic.api.model.enums.GoodsStatus;
-import com.pajk.ic.api.model.enums.ItemStatus;
-import com.pajk.ic.api.model.enums.Source;
-import com.pajk.ic.api.model.param.item.ItemAddDTO;
-import com.pajk.ic.api.model.param.item.ItemUpdDTO;
-import com.pajk.ic.api.model.result.ErrorCode;
-import com.pajk.ic.api.model.topic.ItemTO;
-import com.pajk.ic.exception.ServiceException;
-import com.pajk.ic.manager.CategoryManager;
-import com.pajk.ic.proxy.VendorServiceProxy;
-import com.pajk.ic.util.JsonUtils;
-import com.pajk.ic.util.LangUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 

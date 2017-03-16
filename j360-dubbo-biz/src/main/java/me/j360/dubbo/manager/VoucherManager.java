@@ -1,13 +1,5 @@
 package me.j360.dubbo.manager;
 
-import com.pajk.ic.api.model.domain.item.VoucherDO;
-import com.pajk.ic.api.model.enums.VoucherStatus;
-import com.pajk.ic.api.model.param.item.VoucherQueryDTO;
-import com.pajk.ic.api.model.result.ErrorCode;
-import com.pajk.ic.api.model.result.item.VoucherListQueryResult;
-import com.pajk.ic.api.model.result.item.VoucherQueryResult;
-import com.pajk.ic.api.model.result.item.VoucherResult;
-import com.pajk.ic.repository.VoucherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
