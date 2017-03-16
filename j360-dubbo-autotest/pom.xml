@@ -12,4 +12,11 @@
     <artifactId>j360-dubbo-autotest</artifactId>
     <description>自动化测试包</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>me.j360.dubbo</groupId>
+            <artifactId>j360-dubbo-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

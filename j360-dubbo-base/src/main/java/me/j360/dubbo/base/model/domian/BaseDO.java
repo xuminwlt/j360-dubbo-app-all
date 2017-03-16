@@ -1,4 +1,4 @@
-package me.j360.dubbo.api.model.base.result;
+package me.j360.dubbo.base.model.domian;
 
 import java.io.Serializable;
 

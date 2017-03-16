@@ -1,7 +1,4 @@
-package me.j360.dubbo.api.model.base.result;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+package me.j360.dubbo.base.model.result;
 
 public class PageResultSupport extends ResultSupport{
 	
@@ -54,7 +51,4 @@ public class PageResultSupport extends ResultSupport{
 		this.pageSize = pageSize;
 	}
 	
-	public String toString(){
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-	}
 }

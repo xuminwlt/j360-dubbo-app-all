@@ -1,12 +1,13 @@
 package me.j360.dubbo.api.model.result.user;
 
-import com.pajk.ic.api.model.result.ErrorCode;
-import com.pajk.ic.api.model.result.ResultSupport;
+
+import me.j360.dubbo.api.constant.ErrorCode;
+import me.j360.dubbo.base.model.result.ResultSupport;
 
 import java.util.Map;
 
 
-public class UserVoucherBindResult extends ResultSupport{
+public class UserBindResult extends ResultSupport {
 
 	private static final long serialVersionUID = -3325209355672286185L;
 	private Map<Long, ErrorCode> errorMap;

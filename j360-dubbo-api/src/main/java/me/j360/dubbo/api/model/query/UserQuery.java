@@ -1,7 +1,7 @@
-package me.j360.dubbo.api.model.domain.user;
+package me.j360.dubbo.api.model.query;
 
-import me.j360.dubbo.api.model.base.param.BaseQuery;
 import me.j360.dubbo.api.model.domain.user.UserDO;
+import me.j360.dubbo.base.model.query.BaseQuery;
 
 /**
  * Package: me.j360.dubbo.api.model.query.user

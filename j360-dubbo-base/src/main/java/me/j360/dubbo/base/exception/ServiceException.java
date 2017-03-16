@@ -6,5 +6,6 @@ package me.j360.dubbo.base.exception;
  * Date: 16/8/23 下午2:01
  * 说明：
  */
-public class ServiceException {
+public class ServiceException extends RuntimeException{
+
 }

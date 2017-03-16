@@ -1,5 +1,9 @@
 package me.j360.dubbo.repository;
 
+import me.j360.dubbo.api.constant.ErrorCode;
+import me.j360.dubbo.base.exception.RepositoryException;
+import me.j360.dubbo.exception.ArgumentException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +41,7 @@ public class UserRepository {
     }
 
 
-    public GoodsDO getGoods(long itemId)throws RepositoryException {
+    public GoodsDO getGoods(long itemId) {
         try{
             Params params = new Params("itemId",itemId);
             List<GoodsDO> goods = goodsMapper.getByIdDyn(params.getResult());

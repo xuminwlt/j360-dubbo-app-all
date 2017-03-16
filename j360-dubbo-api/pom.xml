@@ -12,4 +12,12 @@
     <artifactId>j360-dubbo-api</artifactId>
     <description>二方包,对外提供rpc接口</description>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>me.j360.dubbo</groupId>
+            <artifactId>j360-dubbo-base</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

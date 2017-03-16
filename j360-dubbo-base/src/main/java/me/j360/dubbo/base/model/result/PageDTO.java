@@ -1,8 +1,8 @@
-package me.j360.dubbo.api.model.base.domain;
+package me.j360.dubbo.base.model.result;
 
 import java.io.Serializable;
 
-public class PageDO<T> implements Serializable {
+public class PageDTO<T> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

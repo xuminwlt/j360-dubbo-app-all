@@ -1,4 +1,4 @@
-package me.j360.dubbo.model.enums;
+package me.j360.dubbo.api.model.enums;
 
 /**
  * Package: me.j360.dubbo.entity.enums
@@ -6,12 +6,13 @@ package me.j360.dubbo.model.enums;
  * Date: 16/8/23 下午2:37
  * 说明：
  */
-public class UserType {
+public enum  UserTypeEnum{
 
     ASSISTANT("ASSISTANT", "助理"),
     DOCTOR("DOCTOR", "顾问"),
     EXPERT("EXPERT", "专科");
-    UserType(String value, String desc) {
+
+    UserTypeEnum(String value, String desc) {
         this.value = value;
         this.desc = desc;
     }
@@ -32,8 +33,8 @@ public class UserType {
         this.desc = desc;
     }
 
-    public static UserType getByValue(String value){
-        for (UserType tmp : UserType.values()) {
+    public static UserTypeEnum getByValue(String value){
+        for (UserTypeEnum tmp : UserTypeEnum.values()) {
             if (tmp.getValue().equals(value)) {
                 return tmp;
             }

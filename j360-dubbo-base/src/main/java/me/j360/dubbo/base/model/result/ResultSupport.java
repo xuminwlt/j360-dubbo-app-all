@@ -1,4 +1,8 @@
-package me.j360.dubbo.api.model.base.result;
+package me.j360.dubbo.base.model.result;
+
+
+import me.j360.dubbo.base.constant.BaseErrorCode;
+import me.j360.dubbo.base.model.domian.BaseDO;
 
 public class ResultSupport extends BaseDO {
     private boolean success = true;
@@ -39,7 +43,7 @@ public class ResultSupport extends BaseDO {
         this.resultMsg = resultMsg;
     }
 
-    public void setErrorCode(ErrorCode errorCode) {
+    public void setErrorCode(BaseErrorCode errorCode) {
         this.resultCode = errorCode.getErrorCode();
         this.resultMsg = errorCode.getErrorMsg();
         this.success = false;

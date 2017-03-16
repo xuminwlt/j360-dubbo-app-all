@@ -1,4 +1,4 @@
-package me.j360.dubbo.api.model.base.param;
+package me.j360.dubbo.base.model.query;
 
 import java.io.Serializable;
 import java.util.List;
