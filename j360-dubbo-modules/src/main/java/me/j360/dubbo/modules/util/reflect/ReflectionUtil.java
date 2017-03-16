@@ -5,11 +5,10 @@
  *******************************************************************************/
 package me.j360.dubbo.modules.util.reflect;
 
+import me.j360.dubbo.modules.util.base.ExceptionUtil;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
-import org.springside.modules.utils.base.ExceptionUtil;
-import org.springside.modules.utils.base.ExceptionUtil.UncheckedException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -205,6 +204,6 @@ public class ReflectionUtil {
 		} else if (e instanceof RuntimeException) {
 			return (RuntimeException) e;
 		}
-		return new UncheckedException(e);
+		return new ExceptionUtil.UncheckedException(e);
 	}
 }

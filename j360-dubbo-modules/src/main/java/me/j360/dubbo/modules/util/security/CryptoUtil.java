@@ -5,8 +5,9 @@
  *******************************************************************************/
 package me.j360.dubbo.modules.util.security;
 
-import org.springside.modules.utils.base.ExceptionUtil;
-import org.springside.modules.utils.number.RandomUtil;
+
+import me.j360.dubbo.modules.util.base.ExceptionUtil;
+import me.j360.dubbo.modules.util.number.RandomUtil;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;

@@ -1,8 +1,8 @@
 package me.j360.dubbo.modules.util.time;
 
+import me.j360.dubbo.modules.util.base.annotation.NotNull;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
-import org.springside.modules.utils.base.annotation.NotNull;
 
 import java.text.ParseException;
 import java.util.Date;

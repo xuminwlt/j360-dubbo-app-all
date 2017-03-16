@@ -1,6 +1,7 @@
 package me.j360.dubbo.dao.utils;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.mapper.MapperFactoryBean;
@@ -79,6 +80,8 @@ import static org.springframework.util.Assert.notNull;
  * @see org.mybatis.spring.mapper.MapperFactoryBean
  * @version $Id: MapperScannerConfigurer.java 4882 2012-03-12 09:56:36Z simone.tripodi $
  */
+
+@Slf4j
 public class MapperScannerConfigurer implements BeanDefinitionRegistryPostProcessor, InitializingBean, ApplicationContextAware, BeanNameAware,PriorityOrdered {
 
     private String basePackage;
@@ -381,14 +384,14 @@ public class MapperScannerConfigurer implements BeanDefinitionRegistryPostProces
             Set<BeanDefinitionHolder> beanDefinitions = super.doScan(basePackages);
 
             if (beanDefinitions.isEmpty()) {
-                logger.warn("No MyBatis mapper was found in '" + MapperScannerConfigurer.this.basePackage
+                log.warn("No MyBatis mapper was found in '" + MapperScannerConfigurer.this.basePackage
                         + "' package. Please check your configuration.");
             } else {
                 for (BeanDefinitionHolder holder : beanDefinitions) {
                     GenericBeanDefinition definition = (GenericBeanDefinition) holder.getBeanDefinition();
 
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Creating MapperFactoryBean with name '" + holder.getBeanName()
+                    if (log.isDebugEnabled()) {
+                        log.debug("Creating MapperFactoryBean with name '" + holder.getBeanName()
                                 + "' and '" + definition.getBeanClassName() + "' mapperInterface");
                     }
 
@@ -428,7 +431,7 @@ public class MapperScannerConfigurer implements BeanDefinitionRegistryPostProces
             if (super.checkCandidate(beanName, beanDefinition)) {
                 return true;
             } else {
-                logger.warn("Skipping MapperFactoryBean with name '" + beanName
+                log.warn("Skipping MapperFactoryBean with name '" + beanName
                         + "' and '" + beanDefinition.getBeanClassName() + "' mapperInterface"
                         + ". Bean already defined with the same name!");
                 return false;

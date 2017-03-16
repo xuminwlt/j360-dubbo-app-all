@@ -1,6 +1,7 @@
 package me.j360.dubbo.api.model.param.user;
 
-import me.j360.dubbo.api.model.base.param.PageQuery;
+
+import me.j360.dubbo.base.model.query.PageQuery;
 
 /**
  * Package: me.j360.dubbo.api.model.param.user

@@ -5,10 +5,10 @@
  *******************************************************************************/
 package me.j360.dubbo.modules.util.mapper;
 
+import me.j360.dubbo.modules.util.base.ExceptionUtil;
+import me.j360.dubbo.modules.util.reflect.ClassUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-import org.springside.modules.utils.base.ExceptionUtil;
-import org.springside.modules.utils.reflect.ClassUtil;
 
 import javax.xml.bind.*;
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -35,7 +35,7 @@ public class XmlMapper {
 	 * Java Object->Xml without encoding.
 	 */
 	public static String toXml(Object root) {
-		Class clazz =ClassUtil.unwrapCglib(root);
+		Class clazz = ClassUtil.unwrapCglib(root);
 		return toXml(root, clazz, null);
 	}
 

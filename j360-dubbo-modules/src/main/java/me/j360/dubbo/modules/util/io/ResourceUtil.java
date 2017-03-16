@@ -1,9 +1,9 @@
 package me.j360.dubbo.modules.util.io;
 
 import com.google.common.io.Resources;
-import org.springside.modules.utils.collection.ListUtil;
-import org.springside.modules.utils.reflect.ClassUtil;
-import org.springside.modules.utils.text.Charsets;
+import me.j360.dubbo.modules.util.collection.ListUtil;
+import me.j360.dubbo.modules.util.reflect.ClassUtil;
+import me.j360.dubbo.modules.util.text.Charsets;
 
 import java.io.IOException;
 import java.io.InputStream;

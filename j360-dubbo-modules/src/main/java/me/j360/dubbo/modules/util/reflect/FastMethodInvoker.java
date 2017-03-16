@@ -1,10 +1,9 @@
 package me.j360.dubbo.modules.util.reflect;
 
+import me.j360.dubbo.modules.util.base.ExceptionUtil;
+import me.j360.dubbo.modules.util.collection.MapUtil;
 import net.sf.cglib.reflect.FastClass;
 import net.sf.cglib.reflect.FastMethod;
-import org.springside.modules.utils.base.ExceptionUtil;
-import org.springside.modules.utils.collection.MapUtil;
-import org.springside.modules.utils.collection.MapUtil.ValueCreator;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentMap;
@@ -66,7 +65,7 @@ public class FastMethodInvoker {
 	}
 
 	private static FastMethodInvoker build(final Class<?> clz, Method method) {
-		FastClass fastClz = MapUtil.createIfAbsent(fastClassMap, clz, new ValueCreator<FastClass>() {
+		FastClass fastClz = MapUtil.createIfAbsent(fastClassMap, clz, new MapUtil.ValueCreator<FastClass>() {
 			@Override
 			public FastClass get() {
 				return FastClass.create(clz);

@@ -1,8 +1,8 @@
 package me.j360.dubbo.modules.util.log;
 
+import me.j360.dubbo.modules.util.time.ClockUtil;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
-import org.springside.modules.utils.time.ClockUtil;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;

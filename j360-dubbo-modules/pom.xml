@@ -12,4 +12,62 @@
     <artifactId>j360-dubbo-modules</artifactId>
     <description>工程的辅助型三方包,代码从其他开源项目中引入,保留了作者,可外部共享</description>
 
+    <dependencies>
+        <!-- UTILS begin -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <!-- UTILS end -->
+
+        <!-- LOGGING begin -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <!-- LOGGING end -->
+
+        <!-- OPTIONAL begin -->
+        <!-- for JsonMapper -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- for ObjectMapper -->
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- for FastInvoker -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.ant</groupId>
+                    <artifactId>ant</artifactId>
+                </exclusion>
+            </exclusions>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- for CommonCollections -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- OPTIONAL end -->
+
+    </dependencies>
 </project>

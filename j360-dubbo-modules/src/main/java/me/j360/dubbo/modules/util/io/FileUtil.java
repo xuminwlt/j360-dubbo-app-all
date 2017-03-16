@@ -1,12 +1,12 @@
 package me.j360.dubbo.modules.util.io;
 
 import com.google.common.io.Files;
+import me.j360.dubbo.modules.util.base.Platforms;
+import me.j360.dubbo.modules.util.base.annotation.NotNull;
+import me.j360.dubbo.modules.util.base.annotation.Nullable;
+import me.j360.dubbo.modules.util.text.Charsets;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-import org.springside.modules.utils.base.Platforms;
-import org.springside.modules.utils.base.annotation.NotNull;
-import org.springside.modules.utils.base.annotation.Nullable;
-import org.springside.modules.utils.text.Charsets;
 
 import java.io.*;
 import java.util.Iterator;

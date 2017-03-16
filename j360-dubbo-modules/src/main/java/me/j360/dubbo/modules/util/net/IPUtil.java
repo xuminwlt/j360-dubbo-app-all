@@ -1,8 +1,8 @@
 package me.j360.dubbo.modules.util.net;
 
 import com.google.common.net.InetAddresses;
-import org.springside.modules.utils.number.NumberUtil;
-import org.springside.modules.utils.text.MoreStringUtil;
+import me.j360.dubbo.modules.util.number.NumberUtil;
+import me.j360.dubbo.modules.util.text.MoreStringUtil;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;

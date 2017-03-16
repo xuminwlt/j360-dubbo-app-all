@@ -1,10 +1,10 @@
 package me.j360.dubbo.modules.util.net;
 
 import com.google.common.annotations.Beta;
+import me.j360.dubbo.modules.util.base.SystemPropertiesUtil;
+import me.j360.dubbo.modules.util.collection.MapUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springside.modules.utils.base.SystemPropertiesUtil;
-import org.springside.modules.utils.collection.MapUtil;
 
 import javax.net.ServerSocketFactory;
 import java.net.*;

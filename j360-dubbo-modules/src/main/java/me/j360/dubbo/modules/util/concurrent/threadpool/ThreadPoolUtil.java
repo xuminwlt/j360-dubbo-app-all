@@ -2,11 +2,11 @@ package me.j360.dubbo.modules.util.concurrent.threadpool;
 
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import me.j360.dubbo.modules.util.base.annotation.NotNull;
+import me.j360.dubbo.modules.util.base.annotation.Nullable;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springside.modules.utils.base.annotation.NotNull;
-import org.springside.modules.utils.base.annotation.Nullable;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadFactory;

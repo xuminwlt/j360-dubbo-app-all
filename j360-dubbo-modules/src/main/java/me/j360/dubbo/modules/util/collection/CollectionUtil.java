@@ -8,7 +8,7 @@ package me.j360.dubbo.modules.util.collection;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Ordering;
-import org.springside.modules.utils.collection.type.Pair;
+import me.j360.dubbo.modules.util.collection.type.Pair;
 
 import java.util.*;
 

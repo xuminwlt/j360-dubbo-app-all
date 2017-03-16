@@ -1,6 +1,7 @@
 package me.j360.dubbo.modules.util.base;
 
-import org.springside.modules.utils.base.annotation.Nullable;
+
+import me.j360.dubbo.modules.util.base.annotation.Nullable;
 
 /**
  * 参数校验统一使用Apache Common Lange Validate, 补充一些缺少的.

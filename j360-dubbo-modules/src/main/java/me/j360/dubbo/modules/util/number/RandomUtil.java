@@ -1,8 +1,8 @@
 package me.j360.dubbo.modules.util.number;
 
+import me.j360.dubbo.modules.util.base.MoreValidate;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.Validate;
-import org.springside.modules.utils.base.MoreValidate;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

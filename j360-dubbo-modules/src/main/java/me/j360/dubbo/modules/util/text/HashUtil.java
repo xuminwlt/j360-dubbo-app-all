@@ -6,9 +6,9 @@
 package me.j360.dubbo.modules.util.text;
 
 import com.google.common.hash.Hashing;
+import me.j360.dubbo.modules.util.base.annotation.NotNull;
+import me.j360.dubbo.modules.util.base.annotation.Nullable;
 import org.apache.commons.lang3.Validate;
-import org.springside.modules.utils.base.annotation.NotNull;
-import org.springside.modules.utils.base.annotation.Nullable;
 
 import java.io.IOException;
 import java.io.InputStream;

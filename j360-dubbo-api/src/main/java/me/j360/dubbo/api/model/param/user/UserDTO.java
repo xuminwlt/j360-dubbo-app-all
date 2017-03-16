@@ -15,8 +15,4 @@ public class UserDTO implements Serializable{
     private Long userId;
 
 
-    public String toString(){
-        //return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-        return null;
-    }
 }

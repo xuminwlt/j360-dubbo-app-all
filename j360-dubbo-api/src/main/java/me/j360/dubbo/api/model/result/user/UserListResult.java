@@ -1,6 +1,7 @@
 package me.j360.dubbo.api.model.result.user;
 
-import me.j360.dubbo.api.model.base.result.PageResultSupport;
+
+import me.j360.dubbo.base.model.result.PageResultSupport;
 
 /**
  * Package: me.j360.dubbo.api.model.result.user
@@ -8,6 +9,6 @@ import me.j360.dubbo.api.model.base.result.PageResultSupport;
  * Date: 16/8/23 下午3:48
  * 说明：
  */
-public class UserListResult extends PageResultSupport{
+public class UserListResult extends PageResultSupport {
 
 }

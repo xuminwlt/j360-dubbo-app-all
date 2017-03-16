@@ -1,9 +1,9 @@
 package me.j360.dubbo.modules.util.io;
 
 import com.google.common.io.Files;
+import me.j360.dubbo.modules.util.base.Platforms;
+import me.j360.dubbo.modules.util.text.MoreStringUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.springside.modules.utils.base.Platforms;
-import org.springside.modules.utils.text.MoreStringUtil;
 
 /**
  * 关于文件路径的工具集

@@ -1,6 +1,7 @@
 package me.j360.dubbo.modules.util.collection.type;
 
-import org.springside.modules.utils.collection.MapUtil;
+
+import me.j360.dubbo.modules.util.collection.MapUtil;
 
 import java.util.*;
 

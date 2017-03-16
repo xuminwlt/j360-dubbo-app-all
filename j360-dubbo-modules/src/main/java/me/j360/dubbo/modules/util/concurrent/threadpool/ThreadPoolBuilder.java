@@ -1,7 +1,6 @@
 package me.j360.dubbo.modules.util.concurrent.threadpool;
 
 import org.apache.commons.lang3.Validate;
-import org.springside.modules.utils.concurrent.threadpool.QueuableCachedThreadPool.ControllableQueue;
 
 import java.util.concurrent.*;
 import java.util.concurrent.ThreadPoolExecutor.AbortPolicy;
@@ -355,7 +354,7 @@ public class ThreadPoolBuilder {
 			}
 
 			return new QueuableCachedThreadPool(minSize, maxSize, keepAliveSecs, TimeUnit.SECONDS,
-					new ControllableQueue(queueSize), threadFactory, rejectHandler);
+					new QueuableCachedThreadPool.ControllableQueue(queueSize), threadFactory, rejectHandler);
 		}
 	}
 

@@ -1,7 +1,7 @@
 package me.j360.dubbo.modules.util.collection;
 
 import com.google.common.collect.Lists;
-import org.springside.modules.utils.collection.type.SortedArrayList;
+import me.j360.dubbo.modules.util.collection.type.SortedArrayList;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;

@@ -1,76 +1,26 @@
 package me.j360.dubbo.service;
 
+import com.sun.javafx.tools.packager.Log;
+import me.j360.dubbo.api.constant.ErrorCode;
+import me.j360.dubbo.api.model.result.user.UserAddResult;
+import me.j360.dubbo.api.model.result.user.UserInfoResult;
+import me.j360.dubbo.api.model.result.user.UserListResult;
+import me.j360.dubbo.api.service.UserService;
+import me.j360.dubbo.base.exception.RepositoryException;
+import me.j360.dubbo.base.exception.ServiceException;
+import me.j360.dubbo.exception.ArgumentException;
+
 /**
  * Package: me.j360.dubbo.service
  * User: min_xu
  * Date: 16/8/23 下午2:53
  * 说明：service需要cache掉系统中所有的自定义的异常+其他异常，并返回一个result
  */
-public class UserService {
+public class UserServiceImpl implements UserService {
 
-
-    public ItemAddResult addItem(ItemAddDTO itemAddDTO) {
+    public UserInfoResult getUserInfo() {
         try{
-            Log.info("addItem-begin:"+itemAddDTO);
-            itemPubManager.insert(itemAddDTO);
-            Log.info("addItem-succ:"+itemAddDTO);
-            return new ItemAddResult();
-        }catch(ArgumentException ae){
-            Log.error("addItem failure:"+itemAddDTO, ae);
-            return new ItemAddResult(false,ae.getExceptionCode(),ae.getMessage());
-        }catch(ServiceException ve){
-            Log.error("addItem failure:"+itemAddDTO, ve);
-            return new ItemAddResult(false,ve.getExceptionCode(),ve.getMessage());
-        }catch(RepositoryException re){
-            Log.error("addItem failure:"+itemAddDTO, re);
-            return new ItemAddResult(false,re.getExceptionCode(),re.getMessage());
-        }catch(Throwable th){
-            Log.error("addItem failure:"+itemAddDTO, th);
-            return new ItemAddResult(false,ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
-        }
-    }
-
-
-    public UserServeBalTransQueryResult queryUserServeBalTrans(UserServeBalTransQuery userServeBalTransQuery) {
-        if (userServeBalTransQuery == null) {
-            return new UserServeBalTransQueryResult();
-        }
-        return userServeBalManager.queryUserServeBalTrans(userServeBalTransQuery);
-    }
-
-    public ItemAgretionResult getItemAgretion(long itemId,ItemAgretionOptionDTO options) {
-        try{
-            ItemAgretionResult result = new ItemAgretionResult();
-            if(options == null){
-                throw new ArgumentException(ErrorCode.PARAM_ERROR.getErrorCode(),"options is null");
-            }
-            if(itemId == 0){
-                throw new ArgumentException(ErrorCode.PARAM_ERROR.getErrorCode(),"itemId is 0!");
-            }
-            ItemTO item = itemQryManager.getItemTO(itemId, options.isNeedGoods(), options.isNeedConfig());
-            result.setItem(item.getItem());
-            result.setGoods(item.getGoods());
-            result.setItemServiceConfig(item.getItemServiceConfig());
-            return result;
-        }catch(ArgumentException ae){
-            String errorMsg = String.format("getItemAgretion failure:itemId:%d:"+options, itemId);
-            Log.error(errorMsg, ae);
-            return new ItemAgretionResult(false,ae.getExceptionCode(),ae.getMessage());
-        }catch(RepositoryException re){
-            String errorMsg = String.format("getItemAgretion failure:itemId:%d:"+options, itemId);
-            Log.error(errorMsg, re);
-            return new ItemAgretionResult(false,re.getExceptionCode(),re.getMessage());
-        }catch(Throwable th){
-            String errorMsg = String.format("getItemAgretion failure:itemId:%d:"+options, itemId);
-            Log.error(errorMsg, th);
-            return new ItemAgretionResult(false,ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
-        }
-    }
-
-
-    public ItemResult getItem(long itemId,ItemOptionDTO options) {
-        try{
-            ItemResult result = new ItemResult();
+            UserInfoResult result = new UserInfoResult();
             if(options == null){
                 throw new ArgumentException(ErrorCode.PARAM_ERROR.getErrorCode(),"options is null");
             }
@@ -108,17 +58,65 @@ public class UserService {
         }catch(ArgumentException ae){
             String errorMsg = String.format("getItem failure:itemId:%d:"+options, itemId);
             Log.error(errorMsg, ae);
-            return new ItemResult(false,ae.getExceptionCode(),ae.getMessage());
+            return new UserInfoResult(false,ae.getExceptionCode(),ae.getMessage());
         }catch(RepositoryException re){
             String errorMsg = String.format("getItem failure:itemId:%d:"+options, itemId);
             Log.error(errorMsg, re);
-            return new ItemResult(false,re.getExceptionCode(),re.getMessage());
+            return new UserInfoResult(false,re.getExceptionCode(),re.getMessage());
         }catch(Throwable th){
             String errorMsg = String.format("getItem failure:itemId:%d:"+options, itemId);
             Log.error(errorMsg, th);
-            return new ItemResult(false,ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
+            return new UserInfoResult(false,ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
         }
     }
 
+    public UserListResult listUser() {
+        try{
+            UserListResult result = new UserListResult();
+            if(options == null){
+                throw new ArgumentException(ErrorCode.PARAM_ERROR.getErrorCode(),"options is null");
+            }
+            if(itemId == 0){
+                throw new ArgumentException(ErrorCode.PARAM_ERROR.getErrorCode(),"itemId is 0!");
+            }
+            ItemTO item = itemQryManager.getItemTO(itemId, options.isNeedGoods(), options.isNeedConfig());
+            result.setItem(item.getItem());
+            result.setGoods(item.getGoods());
+            result.setItemServiceConfig(item.getItemServiceConfig());
+            return result;
+        }catch(ArgumentException ae){
+            String errorMsg = String.format("getItemAgretion failure:itemId:%d:"+options, itemId);
+            Log.error(errorMsg, ae);
+            return new UserListResult(false,ae.getExceptionCode(),ae.getMessage());
+        }catch(RepositoryException re){
+            String errorMsg = String.format("getItemAgretion failure:itemId:%d:"+options, itemId);
+            Log.error(errorMsg, re);
+            return new UserListResult(false,re.getExceptionCode(),re.getMessage());
+        }catch(Throwable th){
+            String errorMsg = String.format("getItemAgretion failure:itemId:%d:"+options, itemId);
+            Log.error(errorMsg, th);
+            return new UserListResult(false,ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
+        }
+    }
 
+    public UserAddResult saveUser() {
+        try{
+            Log.info("addItem-begin:"+itemAddDTO);
+            itemPubManager.insert(itemAddDTO);
+            Log.info("addItem-succ:"+itemAddDTO);
+            return new UserAddResult();
+        }catch(ArgumentException ae){
+            Log.error("addItem failure:"+itemAddDTO, ae);
+            return new UserAddResult(false,ae.getExceptionCode(),ae.getMessage());
+        }catch(ServiceException ve){
+            Log.error("addItem failure:"+itemAddDTO, ve);
+            return new UserAddResult(false,ve.getExceptionCode(),ve.getMessage());
+        }catch(RepositoryException re){
+            Log.error("addItem failure:"+itemAddDTO, re);
+            return new UserAddResult(false,re.getExceptionCode(),re.getMessage());
+        }catch(Throwable th){
+            Log.error("addItem failure:"+itemAddDTO, th);
+            return new UserAddResult(false, ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
+        }
+    }
 }

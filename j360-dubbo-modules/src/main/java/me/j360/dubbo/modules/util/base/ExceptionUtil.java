@@ -6,10 +6,10 @@
 package me.j360.dubbo.modules.util.base;
 
 import com.google.common.base.Throwables;
+import me.j360.dubbo.modules.util.base.annotation.Nullable;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springside.modules.utils.base.annotation.Nullable;
 
 /**
  * 关于异常的工具类.

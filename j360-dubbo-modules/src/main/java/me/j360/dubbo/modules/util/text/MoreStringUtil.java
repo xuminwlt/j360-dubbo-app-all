@@ -1,9 +1,9 @@
 package me.j360.dubbo.modules.util.text;
 
 import com.google.common.base.Utf8;
+import me.j360.dubbo.modules.util.base.annotation.Nullable;
+import me.j360.dubbo.modules.util.collection.ListUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.springside.modules.utils.base.annotation.Nullable;
-import org.springside.modules.utils.collection.ListUtil;
 
 import java.util.ArrayList;
 import java.util.List;

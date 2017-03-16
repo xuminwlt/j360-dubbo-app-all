@@ -1,8 +1,8 @@
 package me.j360.dubbo.modules.util.collection;
 
 import com.google.common.collect.Sets;
-import org.springside.modules.utils.base.annotation.Nullable;
-import org.springside.modules.utils.collection.type.ConcurrentHashSet;
+import me.j360.dubbo.modules.util.base.annotation.Nullable;
+import me.j360.dubbo.modules.util.collection.type.ConcurrentHashSet;
 
 import java.util.*;
 

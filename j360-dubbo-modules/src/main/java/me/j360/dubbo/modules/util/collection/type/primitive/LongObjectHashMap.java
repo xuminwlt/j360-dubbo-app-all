@@ -14,7 +14,8 @@
  */
 package me.j360.dubbo.modules.util.collection.type.primitive;
 
-import org.springside.modules.utils.number.MathUtil;
+
+import me.j360.dubbo.modules.util.number.MathUtil;
 
 import java.util.*;
 

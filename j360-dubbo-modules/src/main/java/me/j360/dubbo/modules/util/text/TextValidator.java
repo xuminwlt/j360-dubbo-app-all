@@ -1,7 +1,7 @@
 package me.j360.dubbo.modules.util.text;
 
+import me.j360.dubbo.modules.util.base.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
-import org.springside.modules.utils.base.annotation.Nullable;
 
 import java.util.regex.Pattern;
 

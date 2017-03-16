@@ -12,10 +12,10 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import me.j360.dubbo.modules.util.base.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springside.modules.utils.base.annotation.Nullable;
 
 import java.io.IOException;
 import java.util.Collection;

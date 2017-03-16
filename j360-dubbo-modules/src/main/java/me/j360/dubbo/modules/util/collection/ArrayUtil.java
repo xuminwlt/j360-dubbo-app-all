@@ -5,7 +5,7 @@ import com.google.common.collect.ObjectArrays;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Ints;
 import com.google.common.primitives.Longs;
-import org.springside.modules.utils.base.annotation.Nullable;
+import me.j360.dubbo.modules.util.base.annotation.Nullable;
 
 import java.lang.reflect.Array;
 import java.util.*;

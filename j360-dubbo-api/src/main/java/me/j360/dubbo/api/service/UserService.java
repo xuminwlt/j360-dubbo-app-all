@@ -1,5 +1,9 @@
 package me.j360.dubbo.api.service;
 
+import me.j360.dubbo.api.model.result.user.UserAddResult;
+import me.j360.dubbo.api.model.result.user.UserInfoResult;
+import me.j360.dubbo.api.model.result.user.UserListResult;
+
 /**
  * Package: me.j360.dubbo.api
  * User: min_xu
@@ -8,4 +12,9 @@ package me.j360.dubbo.api.service;
  */
 public interface UserService {
 
+    UserInfoResult getUserInfo();
+
+    UserListResult listUser();
+
+    UserAddResult saveUser();
 }

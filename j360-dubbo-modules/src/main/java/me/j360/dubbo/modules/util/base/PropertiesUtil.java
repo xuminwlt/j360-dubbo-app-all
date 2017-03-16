@@ -1,10 +1,10 @@
 package me.j360.dubbo.modules.util.base;
 
+import me.j360.dubbo.modules.util.io.IOUtil;
+import me.j360.dubbo.modules.util.io.URLResourceUtil;
+import me.j360.dubbo.modules.util.number.NumberUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springside.modules.utils.io.IOUtil;
-import org.springside.modules.utils.io.URLResourceUtil;
-import org.springside.modules.utils.number.NumberUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

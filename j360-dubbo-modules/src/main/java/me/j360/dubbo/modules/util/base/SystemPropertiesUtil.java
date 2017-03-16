@@ -1,6 +1,7 @@
 package me.j360.dubbo.modules.util.base;
 
-import org.springside.modules.utils.number.NumberUtil;
+
+import me.j360.dubbo.modules.util.number.NumberUtil;
 
 import java.util.List;
 import java.util.Properties;

@@ -3,7 +3,7 @@ package me.j360.dubbo.modules.util.io;
 import com.google.common.base.Predicate;
 import com.google.common.collect.TreeTraverser;
 import com.google.common.io.Files;
-import org.springside.modules.utils.text.WildcardMatcher;
+import me.j360.dubbo.modules.util.text.WildcardMatcher;
 
 import java.io.File;
 import java.util.List;

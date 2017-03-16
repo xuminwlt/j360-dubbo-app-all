@@ -1,6 +1,7 @@
 package me.j360.dubbo.modules.util.collection.type;
 
-import org.springside.modules.utils.base.annotation.Nullable;
+
+import me.j360.dubbo.modules.util.base.annotation.Nullable;
 
 /**
  * 引入一个简简单单的Pair, 用于返回值返回两个元素.

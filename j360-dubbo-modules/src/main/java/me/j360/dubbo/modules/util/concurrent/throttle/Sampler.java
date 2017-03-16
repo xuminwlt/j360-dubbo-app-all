@@ -1,7 +1,7 @@
 package me.j360.dubbo.modules.util.concurrent.throttle;
 
+import me.j360.dubbo.modules.util.number.RandomUtil;
 import org.apache.commons.lang3.Validate;
-import org.springside.modules.utils.number.RandomUtil;
 
 /**
  * 采样器

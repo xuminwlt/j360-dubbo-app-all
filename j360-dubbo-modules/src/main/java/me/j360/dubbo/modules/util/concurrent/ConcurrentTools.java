@@ -1,8 +1,8 @@
 package me.j360.dubbo.modules.util.concurrent;
 
 import com.google.common.util.concurrent.RateLimiter;
-import org.springside.modules.utils.concurrent.jsr166e.LongAdder;
-import org.springside.modules.utils.concurrent.throttle.Sampler;
+import me.j360.dubbo.modules.util.concurrent.jsr166e.LongAdder;
+import me.j360.dubbo.modules.util.concurrent.throttle.Sampler;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;

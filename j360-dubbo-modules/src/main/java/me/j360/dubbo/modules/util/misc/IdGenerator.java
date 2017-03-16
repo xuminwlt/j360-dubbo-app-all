@@ -6,8 +6,8 @@
 package me.j360.dubbo.modules.util.misc;
 
 import com.google.common.annotations.Beta;
-import org.springside.modules.utils.number.RandomUtil;
-import org.springside.modules.utils.text.EncodeUtil;
+import me.j360.dubbo.modules.util.number.RandomUtil;
+import me.j360.dubbo.modules.util.text.EncodeUtil;
 
 import java.security.SecureRandom;
 import java.util.UUID;

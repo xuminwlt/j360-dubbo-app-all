@@ -1,9 +1,9 @@
 package me.j360.dubbo.modules.util.io;
 
+import me.j360.dubbo.modules.util.io.type.StringBuilderWriter;
+import me.j360.dubbo.modules.util.text.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springside.modules.utils.io.type.StringBuilderWriter;
-import org.springside.modules.utils.text.Charsets;
 
 import java.io.*;
 import java.util.ArrayList;
