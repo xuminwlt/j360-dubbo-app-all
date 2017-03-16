@@ -2,7 +2,12 @@ package me.j360.dubbo.repository;
 
 import me.j360.dubbo.api.constant.ErrorCode;
 import me.j360.dubbo.base.exception.RepositoryException;
+import me.j360.dubbo.dao.mapper.UserMapper;
+import me.j360.dubbo.dao.model.UserDO;
 import me.j360.dubbo.exception.ArgumentException;
+import me.j360.dubbo.util.Params;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,10 +22,10 @@ import java.util.Map;
 public class UserRepository {
 
     @Autowired
-    private CategoryMapper categoryMapper;
+    private UserMapper userMapper;
 
-    public PageDO<List<CategoryDO>> pageList(int pageNo,int pageSize){
-        PageDO<List<CategoryDO>> page = new PageDO<List<CategoryDO>>();
+    public PageDO<List<UserDO>> pageList(int pageNo,int pageSize){
+        PageDO<List<UserDO>> page = new PageDO<List<UserDO>>();
         page.setPageNo(pageNo);
         page.setPageSize(pageSize);
         try{
@@ -28,8 +33,8 @@ public class UserRepository {
             param.put("pageNo", (pageNo-1)*pageSize);
             param.put("pageSize", pageSize);
 
-            List<CategoryDO> datas = categoryMapper.pageList(param);
-            int recordCount = categoryMapper.pageCount(param);
+            List<UserDO> datas = userMapper.pageList(param);
+            int recordCount = userMapper.pageCount(param);
             int recordSize  = datas == null?0:datas.size();
             page.setRecordCount(recordCount);
             page.setRecordSize(recordSize);
@@ -41,17 +46,17 @@ public class UserRepository {
     }
 
 
-    public GoodsDO getGoods(long itemId) {
+    public UserDO getGoods(long itemId) {
         try{
             Params params = new Params("itemId",itemId);
-            List<GoodsDO> goods = goodsMapper.getByIdDyn(params.getResult());
+            List<UserDO> goods = userMapper.getByIdDyn(params.getResult());
             if(CollectionUtils.isEmpty(goods)){
                 throw new ArgumentException(ErrorCode.GOODS_FIND_ERROR.getErrorCode(),ErrorCode.GOODS_FIND_ERROR.getErrorMsg());
             }
             if(goods.size() > 1){
                 throw new ArgumentException(ErrorCode.GOODS_FIND_SIZE_ERROR.getErrorCode(),ErrorCode.GOODS_FIND_SIZE_ERROR.getErrorMsg());
             }
-            GoodsDO data = goods.get(0);
+            UserDO data = goods.get(0);
             return data;
         }catch(ArgumentException ex){
             throw ex;

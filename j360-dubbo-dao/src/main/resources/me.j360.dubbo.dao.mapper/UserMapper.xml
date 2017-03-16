@@ -1,43 +1,176 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pajk.ic.dao.mapper.CardPassDOMapper" >
+<mapper namespace="me.j360.dubbo.dao.mapper.UserMapper" >
 
-  <resultMap id="CardPassDO" type="com.pajk.ic.api.model.domain.item.CardPassDO" >
+  <resultMap id="ItemDO" type="me.j360.dubbo.dao.model.UserDO">
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="type" property="type" jdbcType="INTEGER" />
-    <result column="item_id" property="itemId" jdbcType="BIGINT" />
-    <result column="user_id" property="userId" jdbcType="BIGINT" />
-    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
-    <result column="batch_id" property="batchId" jdbcType="BIGINT" />
-    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
-    <result column="secret" property="secret" jdbcType="VARCHAR" />
-    <result column="gmt_effect_begin" property="gmtEffectBegin" jdbcType="TIMESTAMP" />
-    <result column="gmt_effect_end" property="gmtEffectEnd" jdbcType="TIMESTAMP" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="sub_title" property="subTitle" jdbcType="VARCHAR" />
+    <result column="aliases" property="aliases" jdbcType="VARCHAR" />
+    <result column="one_word" property="oneWord" jdbcType="VARCHAR" />
+    <result column="pic_urls" property="picUrls" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="BIGINT" />
+    <result column="credit" property="credit" jdbcType="BIGINT" />
+    <result column="commission_type" property="commissionType" jdbcType="INTEGER" />
+    <result column="commission" property="commission" jdbcType="BIGINT" />
     <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="version" property="version" jdbcType="BIGINT" />
     <result column="feature" property="feature" jdbcType="LONGVARCHAR" />
+    <result column="version" property="version" jdbcType="LONGVARCHAR" />
+    <result column="source" property="source" jdbcType="INTEGER" />
+    <result column="stock_num" property="stockNum" jdbcType="INTEGER" />
+    <result column="detail_url" property="detailUrl" jdbcType="VARCHAR" />
     <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
     <result column="gmt_update" property="gmtUpdate" jdbcType="TIMESTAMP" />
   </resultMap>
 
   <sql id="column_names" >
-    id, type, item_id, user_id, goods_id, batch_id, card_no, secret, gmt_effect_begin, gmt_effect_end,
-    status, version, gmt_create, gmt_update
+    id, category_id, seller_id, title,sub_title,aliases,one_word, pic_urls, price,stock_num,
+    credit, commission_type,commission, source, status, feature,version, detail_url, gmt_create, gmt_update
   </sql>
 
-  <select id="getById" resultMap="CardPassDO" >
+  <sql id="clumn_upd">
+    version=version+1,
+    <if test="categoryId!= null">category_id= #{categoryId},</if>
+    <if test="sellerId!= null">seller_id= #{sellerId},</if>
+    <if test="title!= null">title= #{title},</if>
+    <if test="subTitle!= null">sub_title= #{subTitle},</if>
+    <if test="aliases!= null">aliases= #{aliases},</if>
+    <if test="oneWord!= null">one_word= #{oneWord},</if>
+    <if test="stockNum!= null">stock_num= #{stockNum},</if>
+    <if test="source!= null">source= #{source},</if>
+    <if test="detailUrl!= null">detail_url= #{detailUrl},</if>
+    <if test="status!= null">status= #{status},</if>
+    <if test="gmtUpdate!= null">gmt_update= now(),</if>
+    <if test="picUrls!= null">pic_urls= #{picUrls},</if>
+    <if test="price!= null">price= #{price},</if>
+    <if test="credit!= null">credit= #{credit},</if>
+    <if test="commissionType!= null">commission_type= #{commissionType},</if>
+    <if test="commission!= null">commission= #{commission},</if>
+    <if test="feature!= null">feature= #{feature},</if>
+  </sql>
+
+  <insert id="add" parameterType="ItemDO">
+    insert into item (id, category_id, seller_id,
+    title,sub_title, aliases, one_word,
+    stock_num, source, detail_url,
+    status, gmt_create, gmt_update,
+    pic_urls, price, credit,
+    commission_type,commission, feature)
+    values (#{id}, #{categoryId}, #{sellerId},
+    #{title},#{subTitle}, #{aliases}, #{oneWord},
+    #{stockNum}, #{source}, #{detailUrl},
+    #{status}, now(), now(),
+    #{picUrls}, #{price}, #{credit},
+    #{commissionType},#{commission}, #{feature})
+  </insert>
+
+  <delete id="del" parameterType="java.lang.Long" >
+    delete from item
+    where id = #{itemId}
+  </delete>
+
+  <update id="upd" parameterType="UserDO">
+    UPDATE item SET
+    category_id= #{categoryId},
+    seller_id= #{sellerId},
+    sub_title= #{subTitle},
+    title= #{title},
+    aliases= #{aliases},
+    one_word= #{oneWord},
+    stock_num= #{stockNum},
+    source= #{source},
+    detail_url= #{detailUrl},
+    status= #{status},
+    gmt_update= now(),
+    pic_urls= #{picUrls},
+    price= #{price},
+    credit= #{credit},
+    commission_type= #{commissionType},
+    commission= #{commission},
+    feature= #{feature},
+    version=version+1
+    WHERE id = #{id} and version=#{version}
+  </update>
+
+  <update id="updStatus" parameterType="map">
+    UPDATE item SET
+    status= #{status},
+    gmt_update= now(),
+    version=version+1
+    WHERE id = #{itemId} and version=#{version}
+  </update>
+
+  <update id="updDyn" parameterType="map">
+    UPDATE item
+    <set>
+      <include refid="clumn_upd"/>
+    </set>
+    WHERE id = #{itemId} and version=#{version}
+  </update>
+
+  <select id="getByIdDyn" resultMap="ItemDO">
     SELECT
-      <include refid="column_names" />
-    FROM card_pass where secret=#{secret}
+    <include refid="column_names"/>
+    FROM item
+    WHERE id = #{itemId}
   </select>
 
-  <update id="updateStatus" parameterType="map">
-  	update card_pass set
-      user_id=#{userId},
-      version=version+1,
-      gmt_update=now(),
-      status=#{status}
-  	where secret=#{secret} and version=#{version}
-  </update>
+  <select id="getByIdsDyn" resultMap="ItemDO">
+    SELECT
+    <include refid="column_names"/>
+    FROM item
+    where id in
+    <foreach collection="itemIds" item="itemId" index="index" open="(" separator="," close=")">
+      #{itemId}
+    </foreach>
+  </select>
+
+  <select id="getPageCount" resultType="int">
+    SELECT count(id) FROM item where 1=1
+    <if test="sellerId != null">
+      and seller_id = #{sellerId}
+    </if>
+    <if test="name != null">
+      and title = #{name}
+    </if>
+    <if test="categoryIds != null">
+      and category_id in
+      <foreach collection="categoryIds" item="categoryId" index="index" open="(" separator="," close=")">
+        #{categoryId}
+      </foreach>
+    </if>
+    <if test="status != null">
+      and status in
+      <foreach collection="status" item="statu" index="index" open="(" separator="," close=")">
+        #{statu}
+      </foreach>
+    </if>
+  </select>
+
+  <select id="getPage" resultMap="ItemDO">
+    SELECT <include refid="column_names"/>
+    FROM item where 1=1
+    <if test="sellerId != null">
+      and seller_id = #{sellerId}
+    </if>
+    <if test="name != null">
+      and title = #{name}
+    </if>
+    <if test="categoryIds != null">
+      and category_id in
+      <foreach collection="categoryIds" item="categoryId" index="index" open="(" separator="," close=")">
+        #{categoryId}
+      </foreach>
+    </if>
+    <if test="status != null">
+      and status in
+      <foreach collection="status" item="statu" index="index" open="(" separator="," close=")">
+        #{statu}
+      </foreach>
+    </if>
+    limit #{offset} , #{pageSize}
+  </select>
   
 </mapper>
