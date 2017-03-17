@@ -1,5 +1,6 @@
 package me.j360.dubbo.api.service;
 
+import me.j360.dubbo.api.model.param.user.UserDTO;
 import me.j360.dubbo.api.model.result.user.UserAddResult;
 import me.j360.dubbo.api.model.result.user.UserInfoResult;
 import me.j360.dubbo.api.model.result.user.UserListResult;
@@ -12,9 +13,9 @@ import me.j360.dubbo.api.model.result.user.UserListResult;
  */
 public interface UserService {
 
-    UserInfoResult getUserInfo();
+    UserInfoResult getUserInfo(UserDTO options);
 
-    UserListResult listUser();
+    UserListResult listUser(UserDTO options);
 
-    UserAddResult saveUser();
+    UserAddResult saveUser(UserDTO options);
 }

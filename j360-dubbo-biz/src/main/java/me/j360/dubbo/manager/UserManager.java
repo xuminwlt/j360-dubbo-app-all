@@ -1,9 +1,13 @@
 package me.j360.dubbo.manager;
 
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.ArrayList;
-import java.util.List;
+import me.j360.dubbo.api.constant.ErrorCode;
+import me.j360.dubbo.api.model.param.user.UserDTO;
+import me.j360.dubbo.api.model.result.user.UserInfoResult;
+import me.j360.dubbo.base.exception.ServiceException;
+import me.j360.dubbo.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.support.TransactionTemplate;
 
 /**
  * Package: me.j360.dubbo.manager
@@ -16,155 +20,77 @@ import java.util.List;
 public class UserManager {
 
     @Autowired
-    private ItemPubHelperFactory itemPubHelperFactory;
+    private UserRepository userRepository;
     @Autowired
-    private ItemPubRepository itemPubRepository;
-    @Autowired
-    private ItemQryManager itemQryManager;
-    @Autowired
-    private CategoryManager categoryManager;
-    @Autowired
-    private IDPool itemIdGenerator;
-    @Autowired
-    private VendorServiceProxy vendorServiceProxy;
+    private TransactionTemplate transactionTemplate;
+
+    //依赖外部的RPC写在Manager中,比如
+    //@Autowired
+    //private OtherRpcService otherRpcService;
 
     /**
      * 发布商品
      */
-    public long insert(ItemAddDTO req){
+    public long insert(UserDTO req){
         long itemId = 0L;
         String borrowedId = null;
         boolean success = false;
-        try{
-            borrowedId = itemIdGenerator.borrow();
-            itemId = Long.parseLong(borrowedId);
-            //验证
-            if(req == null){
-                throw new ServiceException(ErrorCode.PARAM_ERROR.getErrorCode(),"itemAgretion is null!");
-            }
-            ItemDO item = req.getItem();
-            if(item == null){
-                throw new ServiceException(ErrorCode.PARAM_ERROR.getErrorCode(),"item is null!");
-            }
-            if(item.getCategoryId() == null || item.getCategoryId() == 0){
-                throw new ServiceException(ErrorCode.PARAM_ERROR.getErrorCode(),"categoryId is requried!");
-            }
-            CategoryDO category = categoryManager.getCategoryById(item.getCategoryId());
-            ItemPublishType publishType = ItemPublishType.get(category.getCategoryFeature().getPublishType());
-            ItemPubHelper pubHelper = itemPubHelperFactory.create(publishType);
-            //属性验证
-            pubHelper.validateForInsert(item, req.getGoods(), req.getItemServiceConfig());
-            //属性设置
-            pubHelper.propertyForInsert(itemId, req);
-            //入库操作
-            itemPubRepository.insert(req.getItem(),req.getGoods(),req.getItemServiceConfig());
-            success = true;
-            return itemId;
-        }finally{
-            try {
-                if (success) {
-                    if (borrowedId != null) {
-                        itemIdGenerator.consume(borrowedId);
-                    }
-                } else {
-                    if (borrowedId != null) {
-                        itemIdGenerator.giveback(borrowedId);
-                    }
-                }
-            } catch (Throwable t) {
-                Log.warn(String.format(
-                        "failed to return/consume id from id pool! borrowedId=%s, sucess=%s", borrowedId,
-                        success), t);
-            }
-        }
-    }
 
-    /**
-     * 更新商品
-     */
-    public long update(ItemUpdDTO req){
-        long itemId = 0L;
+        //验证
         if(req == null){
-            throw new ServiceException(ErrorCode.PARAM_ERROR.getErrorCode(),"ItemUpdateRequest is null!");
+            throw new ServiceException(ErrorCode.PARAM_ERROR.getErrorCode(),"itemAgretion is null!");
         }
-        ItemDO item = req.getItem();
-        if(item == null){
-            throw new ServiceException(ErrorCode.PARAM_ERROR.getErrorCode(),"item is null!");
-        }
-        if(item.getCategoryId() == null || item.getCategoryId() == 0){
-            throw new ServiceException(ErrorCode.PARAM_ERROR.getErrorCode(),"categoryId is requried!");
-        }
-        CategoryDO category = categoryManager.getCategoryById(item.getCategoryId());
-        List<ItemServeConfigDO> datas = new ArrayList<ItemServeConfigDO>();
-        if(!CollectionUtils.isEmpty(req.getItemServAdds())){
-            datas.addAll(req.getItemServAdds());
-        }
-        if(!CollectionUtils.isEmpty(req.getItemServUpds())){
-            datas.addAll(req.getItemServUpds());
-        }
-        ItemPublishType publishType = ItemPublishType.get(category.getCategoryFeature().getPublishType());
-        ItemPubHelper pubHelper = itemPubHelperFactory.create(publishType);
+
         //属性验证
-        pubHelper.validateForInsert(item, req.getGoods(), datas);
-        itemId = item.getId();
-        ItemTO dest = itemQryManager.getItemTO(itemId,true,true);
-        //属性验证
-        pubHelper.validateForUpdate(req, dest);
-        //属性设置
-        pubHelper.propertyForUpdate(req, dest);
-        itemPubRepository.update(req.getItem(),req.getGoods(),req.getItemServAdds(),req.getItemServUpds(),req.getItemServDels());
+
+        //入库操作
+        //userRepository.insert();
+        success = true;
         return itemId;
-    }
-
-    /**
-     * 上架商品
-     */
-    public void publish(ItemPublishDTO param){
-        ItemTO item = validation(param);
-        if(!item.getItem().isCanPublish()){
-            String errorMsg = String.format("item status:%d is can't publish!", item.getItem().getStatus());
-            throw new ServiceException(ErrorCode.PARAM_ERROR.getErrorCode(),errorMsg);
-        }
-        itemPubRepository.updateStatus(item, ItemStatus.valid.getValue(), GoodsStatus.valid.getValue());
 
     }
 
-    /**
-     * 下架商品
-     */
-    public void close(ItemPublishDTO param){
-        ItemTO item = validation(param);
-        if(!item.getItem().isCanClose()){
-            String errorMsg = String.format("item status:%d is can't unpub!", item.getItem().getStatus());
-            throw new ServiceException(ErrorCode.PARAM_ERROR.getErrorCode(),errorMsg);
-        }
-        itemPubRepository.updateStatus(item, ItemStatus.invalid.getValue(), GoodsStatus.invalid.getValue());
 
-    }
+    public UserInfoResult bind(UserDTO userDTO){
+        UserInfoResult userInfoResult = new UserInfoResult();
 
-    /**
-     * 更新状态的参数验证
-     */
-    private ItemTO validation(ItemPublishDTO param){
-        if(param.getSellerId() == 0 || param.getItemId() == 0){
-            String errorMsg = String.format("sellerId:%d or itemId:%d is not exit!", param.getSellerId(),param.getItemId());
-            throw new ServiceException(ErrorCode.PARAM_ERROR.getErrorCode(),errorMsg);
-        }
-        ItemTO itemAgretion =  itemQryManager.getItemTO(param.getItemId(),true,true);
-        if(itemAgretion == null){
-            throw new ServiceException(ErrorCode.PARAM_ERROR.getErrorCode(),"itemAgretion is error!");
-        }
-        ItemDO item = itemAgretion.getItem();
-        GoodsDO goods = itemAgretion.getGoods();
-        if(item == null || goods == null){
-            String errorMsg = String.format("item:%d or goods is not exit!", param.getItemId());
-            throw new ServiceException(ErrorCode.PARAM_ERROR.getErrorCode(),errorMsg);
-        }
-        //调用user-service获取商户信息，进行验证商户状态和权限；
-        if(!vendorServiceProxy.checkSeller(item.getSellerId())){
-            String errorMsg = String.format("sellerId[%d] is not right!", item.getSellerId());
-            throw new ServiceException(ErrorCode.PARAM_ERROR.getErrorCode(),errorMsg);
-        }
-        return itemAgretion;
+        /*TransactionCallback<Map<Long, ErrorCode>> transactionCallback = new TransactionCallback<Map<Long, ErrorCode>>() {
+            @Override
+            public Map<Long, ErrorCode> doInTransaction(TransactionStatus status) {
+                Map<Long, ErrorCode> errorMap = new HashMap<Long, ErrorCode>();
+                try {
+                    //绑定用户
+                    userVoucherPassRepository.updateUserAndVerison(uid, userVoucherPassDO.getVersion(), voucherNo, UserVoucherPassStatus.binding.getValue());
+                    //生成券密和用户绑定的流水
+                    voucherPassTransRepository.create(createVoucherPassTrans(uid, voucherBatchDO, userVoucherPassDO));
+                    //生成券密和商品的使用次数关系
+                    List<VoucherPassItemDO> voucherPassItems = voucherPassItemRepository.queryAllByVoucherPassId(userVoucherPassDO.getId());
+                    if (CollectionUtils.isEmpty(voucherPassItems)) {
+                        //没有被使用过，使用过不需要再insert券密和商品的使用次数
+                        List<VoucherItemDO> voucherItemDOs = voucherItemRepository.queryAllByVoucherId(userVoucherPassDO.getVoucherId());
+                        if (!CollectionUtils.isEmpty(voucherItemDOs)) {
+                            for (VoucherItemDO voucherItemDO : voucherItemDOs) {
+                                VoucherPassItemDO voucherPassItemDO = createVoucherPassItem(voucherItemDO, userVoucherPassDO);
+                                voucherPassItems.add(voucherPassItemDO);
+                            }
+                        }
+                        voucherPassItemRepository.insertBatch(voucherPassItems);
+                    }
+                } catch (Exception e) {
+                    logger.error("user-bind-voucherpass error", e);
+                    status.setRollbackOnly();
+                    errorMap.put(uid, ErrorCode.DB_ERROR);
+                }
+                return null;
+            }
+        };
+
+        try {
+            errorMap = transactionTemplate.execute(transactionCallback);
+        } catch (Exception e) {
+            logger.error("user-bind-voucherpass transsction error !", e);
+
+        }*/
+        return userInfoResult;
     }
 }
