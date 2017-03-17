@@ -3,6 +3,7 @@ package me.j360.dubbo.repository;
 import me.j360.dubbo.api.constant.ErrorCode;
 import me.j360.dubbo.base.exception.RepositoryException;
 import me.j360.dubbo.base.model.result.PageDO;
+import me.j360.dubbo.dao.mapper.UserDo;
 import me.j360.dubbo.dao.mapper.UserMapper;
 import me.j360.dubbo.dao.model.UserDO;
 import me.j360.dubbo.exception.ArgumentException;
@@ -69,4 +70,12 @@ public class UserRepository {
         }
     }
 
+    public void create(UserDO userDO) {
+        UserDo userDo = new UserDo();
+        userMapper.add(userDo);
+    }
+
+    public int count() {
+        return userMapper.count();
+    }
 }

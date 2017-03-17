@@ -1,14 +1,21 @@
 package me.j360.dubbo.manager;
 
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import me.j360.dubbo.api.constant.ErrorCode;
 import me.j360.dubbo.api.model.param.user.UserDTO;
 import me.j360.dubbo.api.model.result.user.UserInfoResult;
 import me.j360.dubbo.base.exception.ServiceException;
+import me.j360.dubbo.dao.model.UserDO;
 import me.j360.dubbo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Package: me.j360.dubbo.manager
@@ -56,43 +63,39 @@ public class UserManager {
     public UserInfoResult bind(UserDTO userDTO){
         UserInfoResult userInfoResult = new UserInfoResult();
 
-        /*TransactionCallback<Map<Long, ErrorCode>> transactionCallback = new TransactionCallback<Map<Long, ErrorCode>>() {
+        Map<Long, ErrorCode> errorCodeMap = Maps.newHashMap();
+        TransactionCallback<Map<Long, ErrorCode>> transactionCallback = new TransactionCallback<Map<Long, ErrorCode>>() {
             @Override
             public Map<Long, ErrorCode> doInTransaction(TransactionStatus status) {
                 Map<Long, ErrorCode> errorMap = new HashMap<Long, ErrorCode>();
                 try {
-                    //绑定用户
-                    userVoucherPassRepository.updateUserAndVerison(uid, userVoucherPassDO.getVersion(), voucherNo, UserVoucherPassStatus.binding.getValue());
-                    //生成券密和用户绑定的流水
-                    voucherPassTransRepository.create(createVoucherPassTrans(uid, voucherBatchDO, userVoucherPassDO));
-                    //生成券密和商品的使用次数关系
-                    List<VoucherPassItemDO> voucherPassItems = voucherPassItemRepository.queryAllByVoucherPassId(userVoucherPassDO.getId());
-                    if (CollectionUtils.isEmpty(voucherPassItems)) {
-                        //没有被使用过，使用过不需要再insert券密和商品的使用次数
-                        List<VoucherItemDO> voucherItemDOs = voucherItemRepository.queryAllByVoucherId(userVoucherPassDO.getVoucherId());
-                        if (!CollectionUtils.isEmpty(voucherItemDOs)) {
-                            for (VoucherItemDO voucherItemDO : voucherItemDOs) {
-                                VoucherPassItemDO voucherPassItemDO = createVoucherPassItem(voucherItemDO, userVoucherPassDO);
-                                voucherPassItems.add(voucherPassItemDO);
-                            }
-                        }
-                        voucherPassItemRepository.insertBatch(voucherPassItems);
-                    }
+                    UserDO userDO = new UserDO();
+                    userDO.setName("1");
+                    userRepository.create(userDO);
+
+                    userDO.setName("2");
+                    userRepository.create(userDO);
                 } catch (Exception e) {
-                    logger.error("user-bind-voucherpass error", e);
+                    log.error("user-bind-voucherpass error", e);
                     status.setRollbackOnly();
-                    errorMap.put(uid, ErrorCode.DB_ERROR);
+                    errorMap.put(1L,ErrorCode.DB_ERROR);
                 }
                 return null;
             }
         };
 
         try {
-            errorMap = transactionTemplate.execute(transactionCallback);
+            errorCodeMap = transactionTemplate.execute(transactionCallback);
         } catch (Exception e) {
-            logger.error("user-bind-voucherpass transsction error !", e);
+            log.error("user-bind-voucherpass transsction error !", e);
 
-        }*/
+        }
+        userInfoResult.setErrorMap(errorCodeMap);
         return userInfoResult;
+    }
+
+
+    public int count() {
+        return userRepository.count();
     }
 }

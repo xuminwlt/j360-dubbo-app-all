@@ -1,5 +1,6 @@
 package me.j360.dubbo.springfox;
 
+/*
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.spi.DocumentationType;
@@ -22,3 +23,4 @@ public class ApplicationSwaggerConfig {
 
     }
 }
+*/

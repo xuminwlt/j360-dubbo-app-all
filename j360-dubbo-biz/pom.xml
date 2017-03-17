@@ -29,11 +29,11 @@
             <artifactId>j360-dubbo-modules</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>me.j360.dubbo</groupId>
             <artifactId>j360-dubbo-dao</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -79,6 +79,11 @@
             <artifactId>mybatis</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
         <!-- test-lib -->
         <dependency>
             <groupId>junit</groupId>
@@ -92,4 +97,14 @@
         </dependency>
 
     </dependencies>
+
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
 </project>

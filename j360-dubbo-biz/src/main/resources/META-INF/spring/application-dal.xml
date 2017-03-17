@@ -12,7 +12,7 @@
 
     <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath:me/j360/dubbo/dao/mapper/*.xml"/>
+        <property name="mapperLocations" value="classpath:/me/j360/dubbo/dao/mapper/UserMapper.xml"/>
         <property name="typeAliasesPackage" value="me.j360.dubbo.dao.model"/>
     </bean>
     <bean class="me.j360.dubbo.dao.utils.MapperScannerConfigurer">
@@ -25,7 +25,7 @@
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="mapperLocations" value="classpath:me/j360/dubbo/dao/mapper/*.xml"/>
+        <property name="mapperLocations" value="classpath:UserMapper.xml"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

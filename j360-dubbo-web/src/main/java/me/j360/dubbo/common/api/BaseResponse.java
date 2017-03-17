@@ -1,8 +1,7 @@
 package me.j360.dubbo.common.api;
-import com.app.base.BaseEntity;
 import lombok.Getter;
 
-public abstract class BaseResponse extends BaseEntity {
+public abstract class BaseResponse {
 
     @Getter
     protected int status = ApiStatus.SUCCESS;

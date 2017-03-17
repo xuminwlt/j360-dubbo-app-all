@@ -1,6 +1,6 @@
 package me.j360.dubbo.api.model.query;
 
-import me.j360.dubbo.api.model.domain.user.UserDO;
+import me.j360.dubbo.api.model.param.user.UserDTO;
 import me.j360.dubbo.base.model.query.BaseQuery;
 
 /**
@@ -9,6 +9,6 @@ import me.j360.dubbo.base.model.query.BaseQuery;
  * Date: 16/8/23 下午3:52
  * 说明：
  */
-public class UserQuery extends BaseQuery<UserDO> {
+public class UserQuery extends BaseQuery<UserDTO> {
 
 }

@@ -3,7 +3,10 @@ package me.j360.dubbo.api.model.result.user;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.j360.dubbo.api.constant.ErrorCode;
 import me.j360.dubbo.base.model.result.ResultSupport;
+
+import java.util.Map;
 
 /**
  * Package: me.j360.dubbo.api.model.result
@@ -15,6 +18,7 @@ import me.j360.dubbo.base.model.result.ResultSupport;
 @NoArgsConstructor
 public class UserInfoResult extends ResultSupport {
 
+    private Map<Long, ErrorCode> errorMap;
 
     public UserInfoResult(boolean success,int resultCode,String resultMsg){
         super(success,resultCode,resultMsg);
