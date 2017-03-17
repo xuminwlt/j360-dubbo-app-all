@@ -7,6 +7,7 @@ import me.j360.dubbo.api.model.result.user.UserInfoResult;
 import me.j360.dubbo.base.exception.ServiceException;
 import me.j360.dubbo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
 
 /**
@@ -17,6 +18,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  */
 
 @Slf4j
+@Component
 public class UserManager {
 
     @Autowired

@@ -19,6 +19,6 @@
 
     <!-- Activates scanning of @Service -->
     <context:component-scan base-package="me.j360.dubbo.service"/>
-
-
+    <context:component-scan base-package="me.j360.dubbo.manager"/>
+    <context:component-scan base-package="me.j360.dubbo.repository"/>
 </beans>

@@ -1,5 +1,7 @@
 package me.j360.dubbo.dao.mapper;
 
+import me.j360.dubbo.dao.model.UserDO;
+
 /**
  * Package: me.j360.dubbo.dao.mapper
  * User: min_xu
@@ -8,4 +10,9 @@ package me.j360.dubbo.dao.mapper;
  */
 public interface UserMapper {
 
+    /**
+     * 添加商品服务配置
+     * @param
+     */
+    void add(UserDO userDO);
 }

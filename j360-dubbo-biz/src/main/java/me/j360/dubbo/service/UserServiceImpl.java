@@ -12,6 +12,7 @@ import me.j360.dubbo.base.exception.ServiceException;
 import me.j360.dubbo.exception.ArgumentException;
 import me.j360.dubbo.manager.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Package: me.j360.dubbo.service
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 
 @Slf4j
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
