@@ -8,7 +8,11 @@
   </resultMap>
 
   <select id="count" resultType="int" >
-    select count(id) count from user
+    select count(*) from user
+  </select>
+
+  <select id="list" resultMap="UserDO" >
+    select * from user
   </select>
 
   <insert id="add" parameterType="UserDO">

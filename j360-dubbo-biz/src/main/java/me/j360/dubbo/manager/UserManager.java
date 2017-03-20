@@ -15,6 +15,7 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -69,12 +70,19 @@ public class UserManager {
             public Map<Long, ErrorCode> doInTransaction(TransactionStatus status) {
                 Map<Long, ErrorCode> errorMap = new HashMap<Long, ErrorCode>();
                 try {
+                    //slave
+                    userRepository.list();
+
+                    //master
                     UserDO userDO = new UserDO();
                     userDO.setName("1");
                     userRepository.create(userDO);
 
                     userDO.setName("2");
                     userRepository.create(userDO);
+
+                    //master
+                    userRepository.list();
                 } catch (Exception e) {
                     log.error("user-bind-voucherpass error", e);
                     status.setRollbackOnly();
@@ -97,5 +105,11 @@ public class UserManager {
 
     public int count() {
         return userRepository.count();
+    }
+
+    public List<UserDO> list() {
+        List<UserDO> list = userRepository.list();
+        log.info(list.toString());
+        return list;
     }
 }

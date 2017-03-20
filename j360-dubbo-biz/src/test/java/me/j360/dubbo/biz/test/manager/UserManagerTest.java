@@ -17,6 +17,8 @@ public class UserManagerTest extends AbstractManagerTest {
         print(tree);
 
         //userManager.count();
+
+        userManager.list();
     }
 
 

@@ -14,6 +14,7 @@
 - biz 接口实现模块
 - dao 数据访问模块
 - web web集成模块
+- sjdbc 基于sjdbc的分表分库+读写分离模块
 - trace (可选)分布式跟踪集成模块
 - springfox (可选)基于web的接口文档化工具
 - autotest (可选)自动化测试模块

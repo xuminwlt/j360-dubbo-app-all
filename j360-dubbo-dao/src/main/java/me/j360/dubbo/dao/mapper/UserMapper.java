@@ -2,6 +2,8 @@ package me.j360.dubbo.dao.mapper;
 
 import me.j360.dubbo.dao.model.UserDO;
 
+import java.util.List;
+
 /**
  * Package: me.j360.dubbo.dao.mapper
  * User: min_xu
@@ -17,4 +19,6 @@ public interface UserMapper {
     void add(UserDO userDO);
 
     int count();
+
+    List<UserDO> list();
 }

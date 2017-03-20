@@ -18,6 +18,7 @@
         <module>j360-dubbo-springfox</module>
         <module>j360-dubbo-autotest</module>
         <module>j360-dubbo-modules</module>
+        <module>j360-dubbo-sjdbc</module>
     </modules>
 
 
@@ -424,6 +425,18 @@
                 <optional>true</optional>
             </dependency>
             <!-- OPTIONAL end -->
+
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>sharding-jdbc-core</artifactId>
+                <version>1.4.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>sharding-jdbc-config-spring</artifactId>
+                <version>1.4.1</version>
+            </dependency>
+
 
 
             <dependency>

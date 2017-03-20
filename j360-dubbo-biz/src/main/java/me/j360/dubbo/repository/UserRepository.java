@@ -76,4 +76,8 @@ public class UserRepository {
     public int count() {
         return userMapper.count();
     }
+
+    public List<UserDO> list() {
+        return userMapper.list();
+    }
 }

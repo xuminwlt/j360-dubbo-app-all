@@ -6,6 +6,6 @@
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd"
        default-lazy-init="true">
 
-    <context:property-placeholder location="classpath:config.properties"/>
+    <context:property-placeholder location="classpath:config.properties" ignore-unresolvable="true"/>
 
 </beans>
