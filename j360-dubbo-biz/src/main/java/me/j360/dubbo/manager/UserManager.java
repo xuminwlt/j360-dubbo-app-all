@@ -80,7 +80,7 @@ public class UserManager {
                     status.setRollbackOnly();
                     errorMap.put(1L,ErrorCode.DB_ERROR);
                 }
-                return null;
+                return errorMap;
             }
         };
 

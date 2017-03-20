@@ -29,11 +29,11 @@
             <artifactId>j360-dubbo-modules</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>me.j360.dubbo</groupId>
             <artifactId>j360-dubbo-dao</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>-->
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>

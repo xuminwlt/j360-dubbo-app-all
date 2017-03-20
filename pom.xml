@@ -11,7 +11,7 @@
     <modules>
         <module>j360-dubbo-api</module>
         <module>j360-dubbo-biz</module>
-        <!--<module>j360-dubbo-dao</module>-->
+        <module>j360-dubbo-dao</module>
         <module>j360-dubbo-base</module>
         <module>j360-dubbo-web</module>
         <module>j360-dubbo-trace</module>

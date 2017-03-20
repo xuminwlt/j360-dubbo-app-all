@@ -1,5 +1,6 @@
 package me.j360.dubbo.api.constant;
 
+import lombok.ToString;
 import me.j360.dubbo.base.constant.BaseErrorCode;
 
 /**
@@ -8,6 +9,7 @@ import me.j360.dubbo.base.constant.BaseErrorCode;
  * Date: 2017/3/15 下午8:04
  * 说明：
  */
+@ToString
 public class ErrorCode extends BaseErrorCode {
 
     public static final ErrorCode SYSTEM_ERROR = new ErrorCode(-1,"系统错误");

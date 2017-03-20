@@ -3,16 +3,16 @@
 <mapper namespace="me.j360.dubbo.dao.mapper.UserMapper" >
 
   <resultMap id="UserDO" type="me.j360.dubbo.dao.model.UserDO">
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="BIGINT" javaType="Long" />
+    <result column="name" property="name" jdbcType="VARCHAR" javaType="String"/>
   </resultMap>
-
-  <insert id="add" parameterType="UserDO">
-    insert into user (name)
-    value (#{name})
-  </insert>
 
   <select id="count" resultType="int" >
     select count(id) count from user
   </select>
+
+  <insert id="add" parameterType="me.j360.dubbo.dao.model.UserDO">
+    insert into user (id, name)
+    values (#{id}, #{name})
+  </insert>
 </mapper>
