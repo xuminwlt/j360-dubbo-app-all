@@ -11,7 +11,7 @@
     select count(id) count from user
   </select>
 
-  <insert id="add" parameterType="me.j360.dubbo.dao.model.UserDO">
+  <insert id="add" parameterType="UserDO">
     insert into user (id, name)
     values (#{id}, #{name})
   </insert>
