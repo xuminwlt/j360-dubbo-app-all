@@ -21,7 +21,7 @@
 - biz 接口实现模块
 - dao 数据访问模块
 - web web集成模块
-- sjdbc (可选)基于sjdbc的分表分库+读写分离模块,需要注意sql支持列表
+- sjdbc (可选)基于sjdbc的分表分库+读写分离模块,需要注意sql支持列表,不含id生成策略
 - trace (可选)分布式跟踪集成模块
 - springfox (可选)基于web的接口文档化工具
 - autotest (可选)自动化测试模块
@@ -58,4 +58,9 @@ j360-dubbo-api
 - 实现服务的返回定义
 - 异常的设计
 - 服务层中事务的控制
+
+
+### 三方库依赖
+
+- ID生成策略,请依赖或者远程请求ID服务器,参考 https://github.com/xuminwlt/j360-idgen
 

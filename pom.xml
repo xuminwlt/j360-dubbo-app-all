@@ -42,7 +42,7 @@
         <mybatis.version>3.2.8</mybatis.version>
         <mysql.version>5.1.35</mysql.version>
         <mybatis.spring.version>1.2.2</mybatis.spring.version>
-        <druid.version>1.0.13</druid.version>
+        <druid.version>1.0.12</druid.version>
         <aspectj.version>1.8.1</aspectj.version>
         <httpclient.version>4.5.2</httpclient.version>
         <mail.version>1.4.7</mail.version>
@@ -429,12 +429,12 @@
             <dependency>
                 <groupId>com.dangdang</groupId>
                 <artifactId>sharding-jdbc-core</artifactId>
-                <version>1.4.1</version>
+                <version>1.4.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.dangdang</groupId>
                 <artifactId>sharding-jdbc-config-spring</artifactId>
-                <version>1.4.1</version>
+                <version>1.4.2-SNAPSHOT</version>
             </dependency>
 
 
