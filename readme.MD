@@ -63,4 +63,6 @@ j360-dubbo-api
 ### 三方库依赖
 
 - ID生成策略,请依赖或者远程请求ID服务器,参考 https://github.com/xuminwlt/j360-idgen
+- druid sjdbc依赖druid连接池时,对版本有要求,请勿修改druid version
+
 
