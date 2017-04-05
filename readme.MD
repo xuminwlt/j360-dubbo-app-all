@@ -33,7 +33,7 @@
 
 根据阿里巴巴开发手册定义,按照功能层面分层在工程中的实现为:
 
-- web
+- web   
 - service
 - manager
 - dao

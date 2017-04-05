@@ -12,4 +12,10 @@
     <artifactId>j360-dubbo-base</artifactId>
     <description>工程的基础包,和其他工程不共享</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
 </project>

@@ -8,6 +8,8 @@ package me.j360.dubbo.base.constant;
  */
 public abstract class BaseErrorCode {
 
+    public static int SUCCESS_CODE = 0;
+
     private int errorCode;
 
     private String errorMsg;
