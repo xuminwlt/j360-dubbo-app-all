@@ -16,9 +16,6 @@ import java.io.Closeable;
 import java.io.IOException;
 
 /**
- * 
- * @author yuewenxin
- * @version v 0.1 2014年9月28日 下午3:55:21 aaronyue Exp $
  */
 public class HessianUtil {
     private final static Logger            logger            = LoggerFactory
