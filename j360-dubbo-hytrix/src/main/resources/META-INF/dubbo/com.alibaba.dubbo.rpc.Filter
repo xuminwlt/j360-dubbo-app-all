@@ -1,0 +1,1 @@
+hystrix=me.j360.dubbo.hytrix.rpc.filter.HystrixFilter

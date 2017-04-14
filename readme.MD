@@ -23,6 +23,7 @@
 - web web集成模块
 - sjdbc (可选)基于sjdbc的分表分库+读写分离模块,需要注意sql支持列表,不含id生成策略
 - trace (可选)分布式跟踪集成模块
+- hytrix (可选)提供基于hytrix的隔离降级断路策略支持
 - springfox (可选)基于web的接口文档化工具
 - autotest (可选)自动化测试模块
 
@@ -64,5 +65,6 @@ j360-dubbo-api
 
 - ID生成策略,请依赖或者远程请求ID服务器,参考 https://github.com/xuminwlt/j360-idgen
 - druid sjdbc依赖druid连接池时,对版本有要求,请勿修改druid version
+- hytrix 使用时,需要配置对应的线程池参数,Filter已经激活,无需配置
 
 

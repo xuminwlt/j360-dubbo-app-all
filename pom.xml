@@ -19,6 +19,7 @@
         <module>j360-dubbo-autotest</module>
         <module>j360-dubbo-modules</module>
         <module>j360-dubbo-sjdbc</module>
+        <module>j360-dubbo-hytrix</module>
     </modules>
 
 
