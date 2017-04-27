@@ -13,7 +13,6 @@
     <artifactId>j360-dubbo-trace</artifactId>
     <description>基于dubbo的轻量级链路跟踪模块</description>
 
-
     <dependencies>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -23,12 +22,14 @@
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-core</artifactId>
-            <version>4.2.0</version>
         </dependency>
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-http</artifactId>
-            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-web-servlet-filter</artifactId>
         </dependency>
 
         <dependency>
@@ -39,6 +40,14 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <!-- compile dep on 3.0.1 runtime on 2.5 -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

@@ -1,5 +1,7 @@
 package me.j360.dubbo.api.model.param.user;
 
+import lombok.ToString;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +10,7 @@ import java.io.Serializable;
  * Date: 16/8/23 下午3:54
  * 说明：
  */
+@ToString
 public class UserDTO implements Serializable{
 
     private static final long serialVersionUID = 2883382561235637056L;

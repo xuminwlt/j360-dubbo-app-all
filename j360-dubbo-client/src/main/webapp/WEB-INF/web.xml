@@ -6,6 +6,20 @@
 	<display-name>brave servlet handler integration test</display-name>
 
 
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			me.j360.dubbo.client.BraveConfig
+		</param-value>
+	</context-param>
+
 	<servlet>
 	  <servlet-name>dispatcher</servlet-name>
 	  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -30,5 +44,23 @@
 	  <url-pattern>/*</url-pattern>
 	</servlet-mapping>
 
+
+	<!--使用spring拦截器时,注销此处filter拦截,两者只能使用其一-->
+	<filter>
+		<filter-name>DelegatingFilterProxy</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetBeanName</param-name>
+			<param-value>braveServletFilter</param-value>         //自己过滤器的名字
+		</init-param>
+		<init-param>
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>DelegatingFilterProxy</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 </web-app>

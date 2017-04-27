@@ -3,13 +3,13 @@ package me.j360.dubbo.client;
 import com.github.kristofa.brave.Brave;
 import com.github.kristofa.brave.InheritableServerClientAndLocalSpanState;
 import com.github.kristofa.brave.Sampler;
-import com.github.kristofa.brave.spring.ServletHandlerInterceptor;
+import com.github.kristofa.brave.servlet.BraveServletFilter;
 import me.j360.dubbo.trace.brave.Slf4jLogReporter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import zipkin.Endpoint;
 
@@ -18,6 +18,7 @@ import zipkin.Endpoint;
 @EnableWebMvc
 public class BraveConfig extends WebMvcConfigurerAdapter {
 
+
     @Bean
     public Brave brave() {
         //default reporter LoggingSpanCollector
@@ -25,15 +26,24 @@ public class BraveConfig extends WebMvcConfigurerAdapter {
         return builder.build();
     }
 
-    @Bean
+    //使用springmvc拦截器形式,因为不能拦截到filter层面链路,比如shiro,所以使用filter替代
+    /*@Bean
     public ServletHandlerInterceptor interceptor(){
         return ServletHandlerInterceptor.create(brave());
     }
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(interceptor());
+    }*/
+
+    @Autowired
+    private Brave brave;
+
+    @Bean
+    public BraveServletFilter braveServletFilter() {
+        return BraveServletFilter.create(brave);
     }
+
 
     Endpoint local = Endpoint.builder().serviceName("local").ipv4(127 << 24 | 1).port(100).build();
     Brave.Builder braveBuilder(Sampler sampler) {
