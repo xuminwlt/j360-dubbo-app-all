@@ -18,8 +18,8 @@ public final class DubboKeys {
     public static final String ZIPKIN_SPANID_MDC = "zipkinSpanId";
     public static final String ZIPKIN_PARENTID_MDC = "zipkinParentId";
 
-    public static final String HTTP_CLIENT_AGENT = "http.client_agent";
-    public static final String HTTP_CLIENT_UID = "http.client_uid";
+    public static final String HTTP_HEADERS = "http.headers";
+    public static final String HTTP_METHOD = "http.method";
 
     private DubboKeys() {
     }

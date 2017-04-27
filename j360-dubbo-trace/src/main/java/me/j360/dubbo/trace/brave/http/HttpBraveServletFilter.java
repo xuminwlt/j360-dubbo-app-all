@@ -99,11 +99,9 @@ public class HttpBraveServletFilter implements Filter {
                 maybeAddClientAddressFromRequest.accept(httpRequest);
             }
 
-            //TODO: add common binaryAnnotation,或者使用key=header value="toString格式"
+            //TODO: add common binaryAnnotation,或者使用key=headers value="a=b,b=c,c=d"
             if (serverTracer != null) {
-                serverTracer.submitBinaryAnnotation(DubboKeys.HTTP_CLIENT_AGENT, ((HttpServletRequest) request).getHeader("clientAgent"));
-                serverTracer.submitBinaryAnnotation(DubboKeys.HTTP_CLIENT_AGENT, ((HttpServletRequest) request).getHeader("clientAgent"));
-                serverTracer.submitBinaryAnnotation(DubboKeys.HTTP_CLIENT_AGENT, ((HttpServletRequest) request).getHeader("clientAgent"));
+                serverTracer.submitBinaryAnnotation(DubboKeys.HTTP_HEADERS, "");
             }
 
             try {
