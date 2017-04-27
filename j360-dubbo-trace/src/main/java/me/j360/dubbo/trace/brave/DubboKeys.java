@@ -14,6 +14,10 @@ public final class DubboKeys {
 
     public static final String DUBBO_EXCEPTION_NAME = "dubbo.exception_name";
 
+    public static final String ZIPKIN_TRACEID_MDC = "zipkinTraceId";
+    public static final String ZIPKIN_SPANID_MDC = "zipkinSpanId";
+    public static final String ZIPKIN_PARENTID_MDC = "zipkinParentId";
+
     private DubboKeys() {
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder defaults to ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+        <encoder>
+            <pattern>%-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Strictly speaking, the level attribute is not necessary since -->
+    <!-- the level of the root level is set to DEBUG by default.       -->
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <appender name="DMPLOG" class="ch.qos.logback.core.ConsoleAppender">
+        <prudent>true</prudent>
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--服务端生成的用户注册的dmp信息 注册时间\t{"uid":"14032736","reg-type":"注册类型","os-type":"系统类型","channel":"包渠道来源"}-->
+    <logger name="zipkin" level="info" additivity="false">
+        <appender-ref ref="DMPLOG"/>
+    </logger>
+
+</configuration>

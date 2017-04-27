@@ -5,7 +5,7 @@ import com.alibaba.dubbo.common.extension.Activate;
 import com.alibaba.dubbo.rpc.*;
 import com.github.kristofa.brave.*;
 import com.github.kristofa.brave.http.BraveHttpHeaders;
-import com.github.kristofa.brave.internal.Util;
+import org.slf4j.MDC;
 
 import java.net.SocketAddress;
 import java.util.Collection;
@@ -13,39 +13,22 @@ import java.util.Collections;
 
 import static com.github.kristofa.brave.IdConversion.convertToLong;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static me.j360.dubbo.trace.brave.DubboKeys.ZIPKIN_PARENTID_MDC;
+import static me.j360.dubbo.trace.brave.DubboKeys.ZIPKIN_SPANID_MDC;
+import static me.j360.dubbo.trace.brave.DubboKeys.ZIPKIN_TRACEID_MDC;
 
 @Activate(group = {Constants.PROVIDER})
 public class BraveDubboServerFilter implements Filter {
 
 
-    /** Creates a tracing interceptor with defaults. Use {@link #builder(Brave)} to customize. */
-    public static BraveDubboServerFilter create(Brave brave) {
-        return new Builder(brave).build();
-    }
+    private ServerRequestInterceptor serverRequestInterceptor;
+    private ServerResponseInterceptor serverResponseInterceptor;
+    private Brave brave;
 
-    public static Builder builder(Brave brave) {
-        return new Builder(brave);
-    }
-
-    public static final class Builder {
-        final Brave brave;
-
-        Builder(Brave brave) { // intentionally hidden
-            this.brave = Util.checkNotNull(brave, "brave");
-        }
-
-        public BraveDubboServerFilter build() {
-            return new BraveDubboServerFilter(this);
-        }
-    }
-
-    private final ServerRequestInterceptor serverRequestInterceptor;
-    private final ServerResponseInterceptor serverResponseInterceptor;
-
-
-    BraveDubboServerFilter(Builder b) { // intentionally hidden
-        this.serverRequestInterceptor = b.brave.serverRequestInterceptor();
-        this.serverResponseInterceptor = b.brave.serverResponseInterceptor();
+    public void setBrave(Brave brave) {
+        this.brave = brave;
+        this.serverRequestInterceptor = checkNotNull(brave.serverRequestInterceptor());
+        this.serverResponseInterceptor = checkNotNull(brave.serverResponseInterceptor());
     }
 
 
@@ -59,6 +42,10 @@ public class BraveDubboServerFilter implements Filter {
         serverRequestInterceptor.handle(new DubboServerRequestAdapter(context, invocation));
         Result result = invoker.invoke(invocation);
         serverResponseInterceptor.handle(new DubboServerResponseAdapter(result));
+
+        MDC.remove(ZIPKIN_TRACEID_MDC);
+        MDC.remove(ZIPKIN_SPANID_MDC);
+        MDC.remove(ZIPKIN_PARENTID_MDC);
 
         return result;
     }
@@ -79,17 +66,28 @@ public class BraveDubboServerFilter implements Filter {
             final String  sampled = invocation.getAttachment(BraveHttpHeaders.Sampled.getName());
             if (sampled != null) {
                 if (sampled.equals("0") || sampled.toLowerCase().equals("false")) {
-                    return TraceData.NOT_SAMPLED;
+                    return TraceData.builder().sample(false).build();
                 } else {
                     final String parentSpanId = invocation.getAttachment(BraveHttpHeaders.ParentSpanId.getName());
                     final String traceId = invocation.getAttachment(BraveHttpHeaders.TraceId.getName());
                     final String spanId = invocation.getAttachment(BraveHttpHeaders.SpanId.getName());
                     if (traceId != null && spanId != null) {
-                        return TraceData.create(getSpanId(traceId, spanId, parentSpanId));
+                        SpanId span = getSpanId(traceId, spanId, parentSpanId);
+
+                        MDC.put(ZIPKIN_TRACEID_MDC, traceId);
+                        MDC.put(ZIPKIN_SPANID_MDC, spanId);
+
+                        if (parentSpanId != null) {
+                            MDC.put(ZIPKIN_PARENTID_MDC, parentSpanId);
+                        } else {
+                            MDC.remove(ZIPKIN_PARENTID_MDC);
+                        }
+
+                        return TraceData.builder().sample(true).spanId(span).build();
                     }
                 }
             }
-            return TraceData.EMPTY;
+            return TraceData.builder().build();
         }
 
         @Override
@@ -136,4 +134,5 @@ public class BraveDubboServerFilter implements Filter {
                 .spanId(convertToLong(spanId))
                 .parentId(parentSpanId == null ? null : convertToLong(parentSpanId)).build();
     }
+
 }

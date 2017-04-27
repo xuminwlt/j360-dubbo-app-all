@@ -31,22 +31,24 @@ public class UserServiceImpl implements UserService {
 
     public UserInfoResult getUserInfo(UserDTO options) {
         try{
+            log.info("开始执行:options:{}",options);
             UserInfoResult result = new UserInfoResult();
             if(options == null){
                 throw new ArgumentException(ErrorCode.PARAM_ERROR.getErrorCode(),"options is null");
             }
 
+            log.info("执行结束:result:{}",result);
             return result;
         }catch(ArgumentException ae){
-            String errorMsg = String.format("getItem failure:itemId:%d:"+options, options);
+            String errorMsg = String.format("getItem failure:itemId:%s:", options);
             log.error(errorMsg, ae);
             return new UserInfoResult(false,ae.getExceptionCode(),ae.getMessage());
         }catch(RepositoryException re){
-            String errorMsg = String.format("getItem failure:itemId:%d:"+options, options);
+            String errorMsg = String.format("getItem failure:itemId:%s:", options);
             log.error(errorMsg, re);
             return new UserInfoResult(false,re.getExceptionCode(),re.getMessage());
         }catch(Throwable th){
-            String errorMsg = String.format("getItem failure:itemId:%d:"+options, options);
+            String errorMsg = String.format("getItem failure:itemId:%s:", options);
             log.error(errorMsg, th);
             return new UserInfoResult(false,ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
         }
@@ -61,15 +63,15 @@ public class UserServiceImpl implements UserService {
 
             return result;
         }catch(ArgumentException ae){
-            String errorMsg = String.format("getItemAgretion failure:itemId:%d:"+options, options);
+            String errorMsg = String.format("getItemAgretion failure:itemId:%s:", options);
             log.error(errorMsg, ae);
             return new UserListResult(false,ae.getExceptionCode(),ae.getMessage());
         }catch(RepositoryException re){
-            String errorMsg = String.format("getItemAgretion failure:itemId:%d:"+options, options);
+            String errorMsg = String.format("getItemAgretion failure:itemId:%s:", options);
             log.error(errorMsg, re);
             return new UserListResult(false,re.getExceptionCode(),re.getMessage());
         }catch(Throwable th){
-            String errorMsg = String.format("getItemAgretion failure:itemId:%d:"+options, options);
+            String errorMsg = String.format("getItemAgretion failure:itemId:%s:", options);
             log.error(errorMsg, th);
             return new UserListResult(false,ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
         }
