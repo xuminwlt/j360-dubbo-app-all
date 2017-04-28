@@ -74,3 +74,6 @@ j360-dubbo-api
 链路跟踪依赖brave底层定制部分埋点设置,对于Event事件不做处理,本地日志通过注入traceId spanId输出,对于跨线程等异步事件不做直接支持,通过侵入式的api调用提供支持。
 跨进程调用比如RPC通过上下文将信息进行传递。
 
+HTTP Servlet Filter基于AntPath命名规范的跟踪许可配置
+Dubbo Filter TraceId会依赖Http Servlet的traceId存在是否,不存在则生成一个
+
