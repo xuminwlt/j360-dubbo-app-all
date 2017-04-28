@@ -24,6 +24,8 @@ public class BraveDubboClientFilter implements Filter {
     private ClientResponseInterceptor clientResponseInterceptor;
     private Brave brave;
 
+    //Dubbo Filter定义只能使用无参构造加Set注入形式,所以这里没用使用Brave官方推荐的builder方式生成
+
     public void setBrave(Brave brave) {
         this.brave = brave;
         this.clientRequestInterceptor = checkNotNull(brave.clientRequestInterceptor());

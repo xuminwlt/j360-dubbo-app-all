@@ -62,6 +62,7 @@ public class HttpBraveServletFilter implements Filter {
     @Nullable // while deprecated constructor is in use
     private final ServerTracer serverTracer;
     private final MaybeAddClientAddressFromRequest maybeAddClientAddressFromRequest;
+    private final MaybeAddClientHeaderParamFromRequest maybeAddClientHeaderParamFromRequest;
 
     private FilterConfig filterConfig;
 
@@ -71,6 +72,7 @@ public class HttpBraveServletFilter implements Filter {
         this.spanNameProvider = b.spanNameProvider;
         this.serverTracer = b.brave.serverTracer();
         this.maybeAddClientAddressFromRequest = MaybeAddClientAddressFromRequest.create(b.brave);
+        this.maybeAddClientHeaderParamFromRequest = MaybeAddClientHeaderParamFromRequest.create(b.brave);
     }
 
     @Override
@@ -100,8 +102,13 @@ public class HttpBraveServletFilter implements Filter {
             }
 
             //TODO: add common binaryAnnotation,或者使用key=headers value="a=b,b=c,c=d"
+
+            if (maybeAddClientHeaderParamFromRequest != null) {
+                maybeAddClientHeaderParamFromRequest.accept(serverTracer,httpRequest);
+            }
+
             if (serverTracer != null) {
-                serverTracer.submitBinaryAnnotation(DubboKeys.HTTP_HEADERS, "");
+                serverTracer.submitBinaryAnnotation(DubboKeys.HTTP_METHOD, ((HttpServletRequest) request).getMethod());
             }
 
             try {

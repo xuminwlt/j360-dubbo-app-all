@@ -3,8 +3,8 @@ package me.j360.dubbo.client;
 import com.github.kristofa.brave.Brave;
 import com.github.kristofa.brave.InheritableServerClientAndLocalSpanState;
 import com.github.kristofa.brave.Sampler;
-import com.github.kristofa.brave.servlet.BraveServletFilter;
 import me.j360.dubbo.trace.brave.Slf4jLogReporter;
+import me.j360.dubbo.trace.brave.http.HttpBraveServletFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,8 +40,8 @@ public class BraveConfig extends WebMvcConfigurerAdapter {
     private Brave brave;
 
     @Bean
-    public BraveServletFilter braveServletFilter() {
-        return BraveServletFilter.create(brave);
+    public HttpBraveServletFilter braveServletFilter() {
+        return HttpBraveServletFilter.create(brave);
     }
 
 

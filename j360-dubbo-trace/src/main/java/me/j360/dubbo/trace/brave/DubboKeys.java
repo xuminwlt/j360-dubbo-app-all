@@ -19,6 +19,7 @@ public final class DubboKeys {
     public static final String ZIPKIN_PARENTID_MDC = "zipkinParentId";
 
     public static final String HTTP_HEADERS = "http.headers";
+    public static final String HTTP_PARAMS = "http.params";
     public static final String HTTP_METHOD = "http.method";
 
     private DubboKeys() {
