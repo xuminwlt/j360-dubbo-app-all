@@ -11,6 +11,9 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import com.twitter.zipkin.gen.Span;
 import me.j360.dubbo.trace.brave.DubboKeys;
+import me.j360.dubbo.trace.brave.util.AntPathMatcher;
+import me.j360.dubbo.trace.brave.util.PatternMatcher;
+import me.j360.dubbo.trace.brave.util.WebUtils;
 import org.slf4j.MDC;
 import zipkin.Constants;
 
@@ -19,8 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 import static com.github.kristofa.brave.IdConversion.convertToString;
 import static com.github.kristofa.brave.internal.Util.checkNotNull;
@@ -34,22 +36,32 @@ import static me.j360.dubbo.trace.brave.DubboKeys.*;
  */
 public class HttpBraveServletFilter implements Filter {
 
-    /** Creates a tracing filter with defaults. Use {@link #builder(Brave)} to customize. */
-    public static HttpBraveServletFilter create(Brave brave) {
-        return new Builder(brave).build();
+    /** Creates a tracing filter with defaults. Use {@link #builder(Brave,Set)} to customize. */
+    public static HttpBraveServletFilter create(Brave brave,Set paths) {
+        return new Builder(brave,paths).build();
     }
 
-    public static Builder builder(Brave brave) {
-        return new Builder(brave);
+    public static Builder builder(Brave brave,Set paths) {
+        return new Builder(brave,paths);
     }
+
+    /**
+     * PatternMatcher used in determining which paths to react to for a given request.
+     */
+    protected PatternMatcher pathMatcher = new AntPathMatcher();
+    protected Set<String> appliedPaths = new HashSet<String>();
+
+    private boolean isFilterTraced = false;
 
     public static final class Builder {
         final Brave brave;
+        final Set paths;
 
         //提供半路径作为spanName
         SpanNameProvider spanNameProvider = new HttpSpanNameProvider();
 
-        Builder(Brave brave) { // intentionally hidden
+        Builder(Brave brave,Set paths) { // intentionally hidden
+            this.paths = checkNotNull(paths, "paths");
             this.brave = checkNotNull(brave, "brave");
         }
 
@@ -59,7 +71,7 @@ public class HttpBraveServletFilter implements Filter {
         }
 
         public HttpBraveServletFilter build() {
-            return new HttpBraveServletFilter(this);
+            return new HttpBraveServletFilter(this,paths);
         }
     }
 
@@ -74,7 +86,7 @@ public class HttpBraveServletFilter implements Filter {
 
     private FilterConfig filterConfig;
 
-    protected HttpBraveServletFilter(Builder b) { // intentionally hidden
+    protected HttpBraveServletFilter(Builder b,Set paths) { // intentionally hidden
         this.requestInterceptor = b.brave.serverRequestInterceptor();
         this.responseInterceptor = b.brave.serverResponseInterceptor();
         this.spanNameProvider = b.spanNameProvider;
@@ -82,6 +94,7 @@ public class HttpBraveServletFilter implements Filter {
         this.maybeAddClientAddressFromRequest = MaybeAddClientAddressFromRequest.create(b.brave);
         this.maybeAddClientHeaderParamFromRequest = MaybeAddClientHeaderParamFromRequest.create(b.brave);
         this.serverSpanThreadBinder = b.brave.serverSpanThreadBinder();
+        this.appliedPaths = paths;
     }
 
     @Override
@@ -89,8 +102,32 @@ public class HttpBraveServletFilter implements Filter {
         this.filterConfig = filterConfig;
     }
 
+    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+
+        if (this.appliedPaths == null || this.appliedPaths.isEmpty()) {
+            return true;
+        }
+
+        for (String path : this.appliedPaths) {
+            // If the path does match, then pass on to the subclass implementation for specific checks
+            //(first match 'wins'):
+            if (pathsMatch(path, request)) {
+                isFilterTraced = true;
+                return true;
+            }
+        }
+
+        //no path matched, allow the request to go through:
+        return true;
+    }
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+
+        //如果不在范围内则直接排除
+        if (isFilterTraced==false) {
+            filterChain.doFilter(request, response);
+        }
 
         String alreadyFilteredAttributeName = getAlreadyFilteredAttributeName();
         boolean hasAlreadyFilteredAttribute = request.getAttribute(alreadyFilteredAttributeName) != null;
@@ -220,5 +257,22 @@ public class HttpBraveServletFilter implements Filter {
             );
         }
     }
+
+
+    protected String getPathWithinApplication(ServletRequest request) {
+        return WebUtils.getPathWithinApplication(WebUtils.toHttp(request));
+    }
+
+    protected boolean pathsMatch(String path, ServletRequest request) {
+        String requestURI = getPathWithinApplication(request);
+        //log.trace("Attempting to match pattern '{}' with current requestURI '{}'...", path, requestURI);
+        return pathsMatch(path, requestURI);
+    }
+
+
+    protected boolean pathsMatch(String pattern, String path) {
+        return pathMatcher.matches(pattern, path);
+    }
+
 
 }

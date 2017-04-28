@@ -3,6 +3,7 @@ package me.j360.dubbo.client;
 import com.github.kristofa.brave.Brave;
 import com.github.kristofa.brave.InheritableServerClientAndLocalSpanState;
 import com.github.kristofa.brave.Sampler;
+import com.google.common.collect.Sets;
 import me.j360.dubbo.trace.brave.Slf4jLogReporter;
 import me.j360.dubbo.trace.brave.http.HttpBraveServletFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import zipkin.Endpoint;
+
+import java.util.Set;
 
 @Configuration
 @ImportResource("classpath:/client.xml")
@@ -41,7 +44,8 @@ public class BraveConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public HttpBraveServletFilter braveServletFilter() {
-        return HttpBraveServletFilter.create(brave);
+        Set<String> paths = Sets.newHashSet("/","/api");
+        return HttpBraveServletFilter.create(brave,paths);
     }
 
 
