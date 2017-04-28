@@ -51,8 +51,6 @@ public class HttpBraveServletFilter implements Filter {
     protected PatternMatcher pathMatcher = new AntPathMatcher();
     protected Set<String> appliedPaths = new HashSet<String>();
 
-    private boolean isFilterTraced = false;
-
     public static final class Builder {
         final Brave brave;
         final Set paths;
@@ -102,30 +100,29 @@ public class HttpBraveServletFilter implements Filter {
         this.filterConfig = filterConfig;
     }
 
-    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+    protected boolean preHandle(ServletRequest request, ServletResponse response) {
 
         if (this.appliedPaths == null || this.appliedPaths.isEmpty()) {
-            return true;
+            return false;
         }
 
         for (String path : this.appliedPaths) {
             // If the path does match, then pass on to the subclass implementation for specific checks
             //(first match 'wins'):
             if (pathsMatch(path, request)) {
-                isFilterTraced = true;
                 return true;
             }
         }
 
         //no path matched, allow the request to go through:
-        return true;
+        return false;
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 
         //如果不在范围内则直接排除
-        if (isFilterTraced==false) {
+        if (preHandle(request,response) == false) {
             filterChain.doFilter(request, response);
         }
 
