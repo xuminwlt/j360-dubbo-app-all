@@ -21,7 +21,8 @@ public final class DubboKeys {
     public static final String HTTP_HEADERS = "http.headers";
     public static final String HTTP_PARAMS = "http.params";
     public static final String HTTP_METHOD = "http.method";
-
+    public static final String HTTP_STATUS = "http.status";
+    public static final String HTTP_MESSAGE = "http.message";
     private DubboKeys() {
     }
 }

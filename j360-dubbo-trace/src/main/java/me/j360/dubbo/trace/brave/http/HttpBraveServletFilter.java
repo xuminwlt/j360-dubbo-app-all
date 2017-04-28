@@ -1,12 +1,15 @@
 package me.j360.dubbo.trace.brave.http;
 
+import com.alibaba.dubbo.common.utils.StringUtils;
 import com.github.kristofa.brave.*;
 import com.github.kristofa.brave.http.HttpServerRequestAdapter;
 import com.github.kristofa.brave.http.SpanNameProvider;
 import com.github.kristofa.brave.internal.Nullable;
 import com.github.kristofa.brave.servlet.ServletHttpServerRequest;
 import com.github.kristofa.brave.servlet.internal.MaybeAddClientAddressFromRequest;
+import com.google.common.collect.Lists;
 import me.j360.dubbo.trace.brave.DubboKeys;
+import org.slf4j.MDC;
 import zipkin.Constants;
 
 import javax.servlet.*;
@@ -18,6 +21,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 import static com.github.kristofa.brave.internal.Util.checkNotNull;
+import static me.j360.dubbo.trace.brave.DubboKeys.ZIPKIN_PARENTID_MDC;
+import static me.j360.dubbo.trace.brave.DubboKeys.ZIPKIN_SPANID_MDC;
+import static me.j360.dubbo.trace.brave.DubboKeys.ZIPKIN_TRACEID_MDC;
 
 /**
  * Package: me.j360.dubbo.trace.brave.http
@@ -95,7 +101,7 @@ public class HttpBraveServletFilter implements Filter {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             final Servlet25ServerResponseAdapter
                     servlet25ServerResponseAdapter = new Servlet25ServerResponseAdapter((HttpServletResponse) response);
-            requestInterceptor.handle(new HttpServerRequestAdapter(new ServletHttpServerRequest(httpRequest), spanNameProvider));
+            requestInterceptor.handle(new HttpTopServerRequestAdapter(new ServletHttpServerRequest(httpRequest), spanNameProvider));
 
             if (maybeAddClientAddressFromRequest != null) {
                 maybeAddClientAddressFromRequest.accept(httpRequest);
@@ -111,6 +117,17 @@ public class HttpBraveServletFilter implements Filter {
                 serverTracer.submitBinaryAnnotation(DubboKeys.HTTP_METHOD, ((HttpServletRequest) request).getMethod());
             }
 
+            //TODO Add Server MDC
+            //serverTracer.
+            /*MDC.put(ZIPKIN_TRACEID_MDC, traceId);
+            MDC.put(ZIPKIN_SPANID_MDC, spanId);
+
+            if (parentSpanId != null) {
+                MDC.put(ZIPKIN_PARENTID_MDC, parentSpanId);
+            } else {
+                MDC.remove(ZIPKIN_PARENTID_MDC);
+            }*/
+
             try {
                 filterChain.doFilter(request, servlet25ServerResponseAdapter);
             } catch (IOException | ServletException| RuntimeException | Error e) {
@@ -123,6 +140,10 @@ public class HttpBraveServletFilter implements Filter {
                 throw e;
             } finally {
                 responseInterceptor.handle(servlet25ServerResponseAdapter);
+
+                MDC.remove(ZIPKIN_TRACEID_MDC);
+                MDC.remove(ZIPKIN_SPANID_MDC);
+                MDC.remove(ZIPKIN_PARENTID_MDC);
             }
         }
     }
@@ -174,8 +195,19 @@ public class HttpBraveServletFilter implements Filter {
             super.setStatus(sc);
         }
 
+
         /** Alternative to {@link #getStatus}, but for Servlet 2.5+ */
         @Override public Collection<KeyValueAnnotation> responseAnnotations() {
+            String status = getHeader("status");
+            String message = getHeader("message");
+
+            if(StringUtils.isNotEmpty(status)) {
+                if (Integer.parseInt(status) != 0) {
+                    KeyValueAnnotation keyValueAnnotation1 = KeyValueAnnotation.create(DubboKeys.HTTP_STATUS, status);
+                    KeyValueAnnotation keyValueAnnotation2 = KeyValueAnnotation.create(DubboKeys.HTTP_MESSAGE, message);
+                    return Lists.newArrayList(keyValueAnnotation1 ,keyValueAnnotation2);
+                }
+            }
             return Collections.singleton(
                     KeyValueAnnotation.create(zipkin.TraceKeys.HTTP_STATUS_CODE, String.valueOf(httpStatus))
             );

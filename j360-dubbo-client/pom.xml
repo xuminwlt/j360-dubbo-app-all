@@ -13,8 +13,32 @@
     <artifactId>j360-dubbo-client</artifactId>
 
 
+    <properties>
+        <jackson2.version>2.5.3</jackson2.version>
+    </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>me.j360.dubbo</groupId>
+            <artifactId>j360-dubbo-modules</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson2.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson2.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>dubbo</artifactId>
