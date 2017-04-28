@@ -38,7 +38,6 @@ public class BraveDubboServerFilter implements Filter {
 
 
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-
         if ("com.alibaba.dubbo.monitor.MonitorService".equals(invoker.getInterface().getName())) {
             return invoker.invoke(invocation);
         }
