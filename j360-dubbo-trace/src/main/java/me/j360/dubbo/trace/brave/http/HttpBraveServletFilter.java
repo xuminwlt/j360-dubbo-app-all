@@ -7,7 +7,9 @@ import com.github.kristofa.brave.http.SpanNameProvider;
 import com.github.kristofa.brave.internal.Nullable;
 import com.github.kristofa.brave.servlet.ServletHttpServerRequest;
 import com.github.kristofa.brave.servlet.internal.MaybeAddClientAddressFromRequest;
+import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
+import com.twitter.zipkin.gen.Span;
 import me.j360.dubbo.trace.brave.DubboKeys;
 import org.slf4j.MDC;
 import zipkin.Constants;
@@ -20,10 +22,9 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 
+import static com.github.kristofa.brave.IdConversion.convertToString;
 import static com.github.kristofa.brave.internal.Util.checkNotNull;
-import static me.j360.dubbo.trace.brave.DubboKeys.ZIPKIN_PARENTID_MDC;
-import static me.j360.dubbo.trace.brave.DubboKeys.ZIPKIN_SPANID_MDC;
-import static me.j360.dubbo.trace.brave.DubboKeys.ZIPKIN_TRACEID_MDC;
+import static me.j360.dubbo.trace.brave.DubboKeys.*;
 
 /**
  * Package: me.j360.dubbo.trace.brave.http
@@ -69,6 +70,7 @@ public class HttpBraveServletFilter implements Filter {
     private final ServerTracer serverTracer;
     private final MaybeAddClientAddressFromRequest maybeAddClientAddressFromRequest;
     private final MaybeAddClientHeaderParamFromRequest maybeAddClientHeaderParamFromRequest;
+    private final ServerSpanThreadBinder serverSpanThreadBinder;
 
     private FilterConfig filterConfig;
 
@@ -79,6 +81,7 @@ public class HttpBraveServletFilter implements Filter {
         this.serverTracer = b.brave.serverTracer();
         this.maybeAddClientAddressFromRequest = MaybeAddClientAddressFromRequest.create(b.brave);
         this.maybeAddClientHeaderParamFromRequest = MaybeAddClientHeaderParamFromRequest.create(b.brave);
+        this.serverSpanThreadBinder = b.brave.serverSpanThreadBinder();
     }
 
     @Override
@@ -101,7 +104,22 @@ public class HttpBraveServletFilter implements Filter {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             final Servlet25ServerResponseAdapter
                     servlet25ServerResponseAdapter = new Servlet25ServerResponseAdapter((HttpServletResponse) response);
-            requestInterceptor.handle(new HttpTopServerRequestAdapter(new ServletHttpServerRequest(httpRequest), spanNameProvider));
+
+            //Request中的spanId是上一个Span的id,当前的spanId在后面会重新join一次,所以此处添加spanId理解不对
+            requestInterceptor.handle(new HttpServerRequestAdapter(new ServletHttpServerRequest(httpRequest), spanNameProvider));
+
+            //ServerTrace Add to MDC
+            ServerSpan serverSpan = serverSpanThreadBinder.getCurrentServerSpan();
+            if(Objects.equal(Boolean.TRUE,serverSpan.getSample())){
+                Span span = serverSpan.getSpan();
+                MDC.put(ZIPKIN_TRACEID_MDC, convertToString(span.getTrace_id()));
+                MDC.put(ZIPKIN_SPANID_MDC, convertToString(span.getId()));
+                if (span.getParent_id() != null) {
+                    MDC.put(ZIPKIN_PARENTID_MDC, convertToString(span.getParent_id()));
+                } else {
+                    MDC.remove(ZIPKIN_PARENTID_MDC);
+                }
+            }
 
             if (maybeAddClientAddressFromRequest != null) {
                 maybeAddClientAddressFromRequest.accept(httpRequest);
@@ -116,17 +134,6 @@ public class HttpBraveServletFilter implements Filter {
             if (serverTracer != null) {
                 serverTracer.submitBinaryAnnotation(DubboKeys.HTTP_METHOD, ((HttpServletRequest) request).getMethod());
             }
-
-            //TODO Add Server MDC
-            //serverTracer.
-            /*MDC.put(ZIPKIN_TRACEID_MDC, traceId);
-            MDC.put(ZIPKIN_SPANID_MDC, spanId);
-
-            if (parentSpanId != null) {
-                MDC.put(ZIPKIN_PARENTID_MDC, parentSpanId);
-            } else {
-                MDC.remove(ZIPKIN_PARENTID_MDC);
-            }*/
 
             try {
                 filterChain.doFilter(request, servlet25ServerResponseAdapter);

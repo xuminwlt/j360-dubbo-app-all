@@ -5,6 +5,8 @@ import com.alibaba.dubbo.common.extension.Activate;
 import com.alibaba.dubbo.rpc.*;
 import com.github.kristofa.brave.*;
 import com.github.kristofa.brave.http.BraveHttpHeaders;
+import com.google.common.base.Objects;
+import com.twitter.zipkin.gen.Span;
 import org.slf4j.MDC;
 
 import java.net.SocketAddress;
@@ -12,6 +14,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import static com.github.kristofa.brave.IdConversion.convertToLong;
+import static com.github.kristofa.brave.IdConversion.convertToString;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static me.j360.dubbo.trace.brave.DubboKeys.ZIPKIN_PARENTID_MDC;
 import static me.j360.dubbo.trace.brave.DubboKeys.ZIPKIN_SPANID_MDC;
@@ -24,11 +27,13 @@ public class BraveDubboServerFilter implements Filter {
     private ServerRequestInterceptor serverRequestInterceptor;
     private ServerResponseInterceptor serverResponseInterceptor;
     private Brave brave;
+    private ServerSpanThreadBinder serverSpanThreadBinder;
 
     public void setBrave(Brave brave) {
         this.brave = brave;
         this.serverRequestInterceptor = checkNotNull(brave.serverRequestInterceptor());
         this.serverResponseInterceptor = checkNotNull(brave.serverResponseInterceptor());
+        this.serverSpanThreadBinder = brave.serverSpanThreadBinder();
     }
 
 
@@ -39,7 +44,22 @@ public class BraveDubboServerFilter implements Filter {
         }
 
         RpcContext context = RpcContext.getContext();
+        //Request中的spanId是上一个Span的id,当前的spanId在后面会重新join一次,所以此处添加spanId理解不对
         serverRequestInterceptor.handle(new DubboServerRequestAdapter(context, invocation));
+
+        //ServerTrace Add to MDC
+        ServerSpan serverSpan = serverSpanThreadBinder.getCurrentServerSpan();
+        if(Objects.equal(Boolean.TRUE,serverSpan.getSample())){
+            Span span = serverSpan.getSpan();
+            MDC.put(ZIPKIN_TRACEID_MDC, convertToString(span.getTrace_id()));
+            MDC.put(ZIPKIN_SPANID_MDC, convertToString(span.getId()));
+            if (span.getParent_id() != null) {
+                MDC.put(ZIPKIN_PARENTID_MDC, convertToString(span.getParent_id()));
+            } else {
+                MDC.remove(ZIPKIN_PARENTID_MDC);
+            }
+        }
+
         Result result = invoker.invoke(invocation);
         serverResponseInterceptor.handle(new DubboServerResponseAdapter(result));
 
@@ -73,16 +93,6 @@ public class BraveDubboServerFilter implements Filter {
                     final String spanId = invocation.getAttachment(BraveHttpHeaders.SpanId.getName());
                     if (traceId != null && spanId != null) {
                         SpanId span = getSpanId(traceId, spanId, parentSpanId);
-
-                        MDC.put(ZIPKIN_TRACEID_MDC, traceId);
-                        MDC.put(ZIPKIN_SPANID_MDC, spanId);
-
-                        if (parentSpanId != null) {
-                            MDC.put(ZIPKIN_PARENTID_MDC, parentSpanId);
-                        } else {
-                            MDC.remove(ZIPKIN_PARENTID_MDC);
-                        }
-
                         return TraceData.builder().sample(true).spanId(span).build();
                     }
                 }

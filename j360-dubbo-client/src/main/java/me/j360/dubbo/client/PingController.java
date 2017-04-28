@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.j360.dubbo.api.model.param.user.UserDTO;
 import me.j360.dubbo.api.service.UserService;
 import me.j360.dubbo.modules.util.mapper.JsonMapper;
+import org.apache.log4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
+
+import static me.j360.dubbo.trace.brave.DubboKeys.ZIPKIN_TRACEID_MDC;
+
 @Slf4j
 @Controller
 @RequestMapping(value = "/ping", method = RequestMethod.GET)
@@ -38,6 +42,8 @@ public class PingController {
         String message = e.getMessage();
         if (message == null) message = e.getClass().getSimpleName();
         httpServletResponse.addHeader("message",message);
+
+        System.out.println(MDC.get(ZIPKIN_TRACEID_MDC));
         return ResponseEntity.noContent().build();
     }
 

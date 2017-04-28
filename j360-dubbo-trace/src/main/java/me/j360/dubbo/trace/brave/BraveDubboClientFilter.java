@@ -67,11 +67,9 @@ public class BraveDubboClientFilter implements Filter {
                 ((RpcInvocation) invocation).setAttachment(BraveHttpHeaders.TraceId.getName(), IdConversion.convertToString(spanId.traceId));
                 ((RpcInvocation) invocation).setAttachment(BraveHttpHeaders.SpanId.getName(), IdConversion.convertToString(spanId.spanId));
 
-
                 if (spanId.nullableParentId() != null) {
                     ((RpcInvocation) invocation).setAttachment(BraveHttpHeaders.ParentSpanId.getName(), IdConversion.convertToString(spanId.parentId));
                 }
-
             }
         }
 
