@@ -77,3 +77,14 @@ j360-dubbo-api
 HTTP Servlet Filter基于AntPath命名规范的跟踪许可配置
 Dubbo Filter TraceId会依赖Http Servlet的traceId存在是否,不存在则生成一个
 
+### 分表分库/读写分离
+
+
+
+### TCC分布式事务
+
+
+
+
+### Hytrix隔离/降级/熔断
+

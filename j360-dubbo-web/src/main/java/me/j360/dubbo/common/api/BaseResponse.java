@@ -1,10 +1,19 @@
 package me.j360.dubbo.common.api;
-import lombok.Getter;
 
-public abstract class BaseResponse {
+import lombok.Getter;
+import me.j360.dubbo.base.constant.BaseApiStatus;
+import me.j360.dubbo.base.model.domian.BaseDO;
+
+/**
+ * Package: com.app.api.base
+ * User: min_xu
+ * Date: 16/8/19 下午3:01
+ * 说明：
+ */
+public abstract class BaseResponse extends BaseDO {
 
     @Getter
-    protected int status = ApiStatus.SUCCESS;
+    protected int status = BaseApiStatus.SUCCESS;
 
     @Getter
     protected String error = "";

@@ -1,55 +1,41 @@
 package me.j360.dubbo.common.api;
 
+import me.j360.dubbo.base.constant.BaseApiStatus;
+import me.j360.dubbo.base.model.result.BaseResultSupport;
+import me.j360.dubbo.common.api.exception.UnCheckedWebException;
+
 /**
  * Package: com.app.constant
- * User: min_xu
+ * UserVo: min_xu
  * Date: 16/8/19 上午11:08
- * 说明：该类原则上只能由web端调用（返回时需要结合properties文件加上相应的message信息）
- *
- * Web API的返回值定义，使用静态属性定义，具体描述信息使用properties文件映射
- *      code长度为标准6位长度，新老版本兼容使用逐步替换策略
- *      每个模块的code由该模块开发人员维护
+ * 说明：扩展性业务API CODE
  *
  */
-public class ApiStatus {
-
-    public static final int SUCCESS = 0;
-
-    /**
-     * SYSTEM + 通用异常
-     */
-    public static final int SY_API_REQUEST_PARAM_ERROR = 100001;
-
-    public static final int SY_SERVICE_NOT_AVALABLE = 100002;
+public class ApiStatus extends BaseApiStatus{
 
 
     /**
      * ACCOUNT
      */
-    public static final int AC_ILLGUAL_ACCOUNT = 200001;
+    public static final int AC_ILLGUAL_ACCOUNT = 20001;
 
 
     /**
      * USER
      */
-    public static final int US_ILLGUAL_ACCOUNT = 300001;
+    public static final int US_ILLGUAL_ACCOUNT = 30001;
 
 
-    /**
-     * HOME(post/video/album)
-     */
-    public static final int HO_ILLGUAL_ACCOUNT = 400001;
+    public static UnCheckedWebException wrapperException(BaseResultSupport resultSupport) {
+        int code = resultSupport.getCode();
+        String msg = resultSupport.getMsg();
+        return new UnCheckedWebException(code,msg);
+    }
 
 
-
-    /**
-     * MESSAGE(notice/im)
-     */
-    public static final int ME_ILLGUAL_ACCOUNT = 500001;
-
-
-
-
+    public static UnCheckedWebException wrapperException(RuntimeException ex) {
+        return new UnCheckedWebException(SYST_SYSTEM_ERROR,FAIL_MESSAGE,ex);
+    }
 
 
 }
