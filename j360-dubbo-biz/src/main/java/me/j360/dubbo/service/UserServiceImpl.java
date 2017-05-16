@@ -2,17 +2,19 @@ package me.j360.dubbo.service;
 
 import lombok.extern.slf4j.Slf4j;
 import me.j360.dubbo.api.constant.ErrorCode;
+import me.j360.dubbo.api.model.domain.UserDO;
 import me.j360.dubbo.api.model.param.user.UserDTO;
-import me.j360.dubbo.api.model.result.user.UserAddResult;
-import me.j360.dubbo.api.model.result.user.UserInfoResult;
-import me.j360.dubbo.api.model.result.user.UserListResult;
 import me.j360.dubbo.api.service.UserService;
 import me.j360.dubbo.base.exception.RepositoryException;
 import me.j360.dubbo.base.exception.ServiceException;
+import me.j360.dubbo.base.model.result.DefaultPageResult;
+import me.j360.dubbo.base.model.result.DefaultResult;
 import me.j360.dubbo.exception.ArgumentException;
 import me.j360.dubbo.manager.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 /**
  * Package: me.j360.dubbo.service
@@ -29,72 +31,71 @@ public class UserServiceImpl implements UserService {
     private UserManager userManager;
 
 
-    public UserInfoResult getUserInfo(UserDTO options) {
+    public DefaultResult<UserDO> getUserInfo(UserDTO options) {
         try{
             log.info("开始执行:options:{}",options);
-            UserInfoResult result = new UserInfoResult();
             if(options == null){
                 throw new ArgumentException(ErrorCode.PARAM_ERROR.getErrorCode(),"options is null");
             }
 
-            log.info("执行结束:result:{}",result);
-            return result;
+            UserDO userDO = new UserDO();
+            log.info("执行结束:result:{}",userDO.toString());
+            return DefaultResult.success(userDO);
         }catch(ArgumentException ae){
             String errorMsg = String.format("getItem failure:itemId:%s:", options);
             log.error(errorMsg, ae);
-            return new UserInfoResult(false,ae.getExceptionCode(),ae.getMessage());
+            return DefaultResult.fail(ae.getExceptionCode(),ae.getMessage());
         }catch(RepositoryException re){
             String errorMsg = String.format("getItem failure:itemId:%s:", options);
             log.error(errorMsg, re);
-            return new UserInfoResult(false,re.getExceptionCode(),re.getMessage());
+            return DefaultResult.fail(re.getExceptionCode(),re.getMessage());
         }catch(Throwable th){
             String errorMsg = String.format("getItem failure:itemId:%s:", options);
             log.error(errorMsg, th);
-            return new UserInfoResult(false,ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
+            return DefaultResult.fail(ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
         }
     }
 
-    public UserListResult listUser(UserDTO options) {
+    public DefaultPageResult<UserDO> listUser(UserDTO options) {
         try{
-            UserListResult result = new UserListResult();
-            if(options == null){
-                throw new ArgumentException(ErrorCode.PARAM_ERROR.getErrorCode(),"options is null");
-            }
 
-            return result;
+            UserDO userDO = new UserDO();
+            log.info("执行结束:result:{}",userDO.toString());
+
+            return DefaultPageResult.success(Collections.singletonList(userDO));
         }catch(ArgumentException ae){
             String errorMsg = String.format("getItemAgretion failure:itemId:%s:", options);
             log.error(errorMsg, ae);
-            return new UserListResult(false,ae.getExceptionCode(),ae.getMessage());
+            return DefaultPageResult.fail(ae.getExceptionCode(),ae.getMessage());
         }catch(RepositoryException re){
             String errorMsg = String.format("getItemAgretion failure:itemId:%s:", options);
             log.error(errorMsg, re);
-            return new UserListResult(false,re.getExceptionCode(),re.getMessage());
+            return DefaultPageResult.fail(re.getExceptionCode(),re.getMessage());
         }catch(Throwable th){
             String errorMsg = String.format("getItemAgretion failure:itemId:%s:", options);
             log.error(errorMsg, th);
-            return new UserListResult(false,ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
+            return DefaultPageResult.fail(ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
         }
     }
 
-    public UserAddResult saveUser(UserDTO userDTO) {
+    public DefaultResult<UserDO> saveUser(UserDTO userDTO) {
         try{
             log.info("addItem-begin:"+userDTO);
             userManager.insert(userDTO);
             log.info("addItem-succ:"+userDTO);
-            return new UserAddResult();
+            return DefaultResult.success();
         }catch(ArgumentException ae){
             log.error("addItem failure:"+userDTO, ae);
-            return new UserAddResult(false,ae.getExceptionCode(),ae.getMessage());
+            return DefaultResult.fail(ae.getExceptionCode(),ae.getMessage());
         }catch(ServiceException ve){
             log.error("addItem failure:"+userDTO, ve);
-            return new UserAddResult(false,ve.getExceptionCode(),ve.getMessage());
+            return DefaultResult.fail(ve.getExceptionCode(),ve.getMessage());
         }catch(RepositoryException re){
             log.error("addItem failure:"+userDTO, re);
-            return new UserAddResult(false,re.getExceptionCode(),re.getMessage());
+            return DefaultResult.fail(re.getExceptionCode(),re.getMessage());
         }catch(Throwable th){
             log.error("addItem failure:"+userDTO, th);
-            return new UserAddResult(false, ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
+            return DefaultResult.fail( ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
         }
     }
 

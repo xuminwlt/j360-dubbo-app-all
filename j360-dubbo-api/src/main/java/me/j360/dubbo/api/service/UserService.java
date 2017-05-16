@@ -1,9 +1,9 @@
 package me.j360.dubbo.api.service;
 
+import me.j360.dubbo.api.model.domain.UserDO;
 import me.j360.dubbo.api.model.param.user.UserDTO;
-import me.j360.dubbo.api.model.result.user.UserAddResult;
-import me.j360.dubbo.api.model.result.user.UserInfoResult;
-import me.j360.dubbo.api.model.result.user.UserListResult;
+import me.j360.dubbo.base.model.result.DefaultPageResult;
+import me.j360.dubbo.base.model.result.DefaultResult;
 
 /**
  * Package: me.j360.dubbo.api
@@ -13,9 +13,9 @@ import me.j360.dubbo.api.model.result.user.UserListResult;
  */
 public interface UserService {
 
-    UserInfoResult getUserInfo(UserDTO options);
+    DefaultResult<UserDO> getUserInfo(UserDTO options);
 
-    UserListResult listUser(UserDTO options);
+    DefaultPageResult<UserDO> listUser(UserDTO options);
 
-    UserAddResult saveUser(UserDTO options);
+    DefaultResult<UserDO> saveUser(UserDTO options);
 }
