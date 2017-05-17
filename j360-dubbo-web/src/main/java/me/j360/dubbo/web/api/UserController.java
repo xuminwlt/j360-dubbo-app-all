@@ -32,7 +32,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "user/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ApiResponse getUser(@PathVariable Long id) {
 
