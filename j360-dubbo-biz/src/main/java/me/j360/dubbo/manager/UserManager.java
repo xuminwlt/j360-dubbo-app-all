@@ -3,10 +3,9 @@ package me.j360.dubbo.manager;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import me.j360.dubbo.api.constant.ErrorCode;
+import me.j360.dubbo.api.model.domain.UserDO;
 import me.j360.dubbo.api.model.param.user.UserDTO;
-import me.j360.dubbo.api.model.result.user.UserInfoResult;
 import me.j360.dubbo.base.exception.ServiceException;
-import me.j360.dubbo.dao.model.UserDO;
 import me.j360.dubbo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -61,8 +60,7 @@ public class UserManager {
     }
 
 
-    public UserInfoResult bind(UserDTO userDTO){
-        UserInfoResult userInfoResult = new UserInfoResult();
+    public UserDO bind(UserDTO userDTO){
 
         Map<Long, ErrorCode> errorCodeMap = Maps.newHashMap();
         TransactionCallback<Map<Long, ErrorCode>> transactionCallback = new TransactionCallback<Map<Long, ErrorCode>>() {
@@ -98,8 +96,9 @@ public class UserManager {
             log.error("user-bind-voucherpass transsction error !", e);
 
         }
-        userInfoResult.setErrorMap(errorCodeMap);
-        return userInfoResult;
+        //UserDO.setErrorMap(errorCodeMap);
+        //TODO Result
+        return new UserDO();
     }
 
 

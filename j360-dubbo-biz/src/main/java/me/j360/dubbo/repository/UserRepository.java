@@ -1,10 +1,10 @@
 package me.j360.dubbo.repository;
 
 import me.j360.dubbo.api.constant.ErrorCode;
+import me.j360.dubbo.api.model.domain.UserDO;
 import me.j360.dubbo.base.exception.RepositoryException;
 import me.j360.dubbo.base.model.result.PageDO;
 import me.j360.dubbo.dao.mapper.UserMapper;
-import me.j360.dubbo.dao.model.UserDO;
 import me.j360.dubbo.exception.ArgumentException;
 import me.j360.dubbo.util.Params;
 import org.springframework.beans.factory.annotation.Autowired;

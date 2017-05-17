@@ -1,6 +1,7 @@
 package me.j360.dubbo.dao.mapper;
 
-import me.j360.dubbo.dao.model.UserDO;
+
+import me.j360.dubbo.api.model.domain.UserDO;
 
 import java.util.List;
 
