@@ -13,4 +13,6 @@ public class UserDO {
 
     private Long uid;
     private String name;
+    private boolean vip;
+
 }
