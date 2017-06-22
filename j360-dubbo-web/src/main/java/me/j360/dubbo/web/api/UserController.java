@@ -1,16 +1,10 @@
 package me.j360.dubbo.web.api;
 
 import lombok.extern.slf4j.Slf4j;
-import me.j360.dubbo.api.model.domain.UserDO;
-import me.j360.dubbo.api.model.param.user.UserDTO;
-import me.j360.dubbo.api.service.UserService;
-import me.j360.dubbo.base.model.result.DefaultResult;
 import me.j360.dubbo.common.api.ApiResponse;
-import me.j360.dubbo.common.api.ApiStatus;
-import me.j360.dubbo.web.response.UserVo;
-import org.springframework.beans.factory.annotation.Autowired;
+import me.j360.dubbo.web.request.AddUserRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,10 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController {
 
 
-    @Autowired
+    /*@Autowired
     private UserService userService;
 
-    @RequestMapping(value = "user/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
     @ResponseBody
     public ApiResponse getUser(@PathVariable Long id) {
 
@@ -50,6 +44,15 @@ public class UserController {
         }
 
         return ApiResponse.fail(ApiStatus.wrapperException(result));
+
+    }*/
+
+
+    @RequestMapping(value = "add", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiResponse addUser(@Validated AddUserRequest request) {
+
+        return ApiResponse.success();
 
     }
 }

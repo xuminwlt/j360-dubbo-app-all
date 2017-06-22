@@ -96,10 +96,6 @@ public class UserManager {
             log.error("user-bind-voucherpass transsction error !", e);
 
         }
-        UserDO userDO = new UserDO();
-        if (userDO == null) {
-            userDO.getVip();
-        }
         //UserDO.setErrorMap(errorCodeMap);
         //TODO Result
         return new UserDO();

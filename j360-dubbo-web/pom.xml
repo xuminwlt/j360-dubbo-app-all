@@ -43,8 +43,65 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>1.7.21</version>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.logback-extensions</groupId>
+            <artifactId>logback-ext-spring</artifactId>
+            <version>0.1.2</version>
+        </dependency>
+
+        <!-- jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
 
         <dependency>
@@ -54,4 +111,65 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <resources>
+            <!--<resource>-->
+            <!--<directory>src/main/resources</directory>-->
+            <!--</resource>-->
+            <!--<resource>-->
+            <!--<directory>src/main/resources</directory>-->
+            <!--<filtering>true</filtering>-->
+            <!--<includes>-->
+            <!--<include>**.properties</include>-->
+            <!--</includes>-->
+            <!--</resource>-->
+        </resources>
+        <plugins>
+            <!-- war -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
+            <!-- jetty -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.2.v20170220</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-io</artifactId>
+                        <version>9.4.2.v20170220</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <webAppSourceDirectory>${project.basedir}/src/main/webapp</webAppSourceDirectory>
+                    <!--<classesDirectory>${project.build.outputDirectory}</classesDirectory>-->
+                    <!--<testClassesDirectory>${project.build.testOutputDirectory}</testClassesDirectory>-->
+                    <webApp>
+                        <!-- webapp的上下文路径 -->
+                        <contextPath>/</contextPath>
+                        <!-- web.xml位置 -->
+                        <descriptor>target/${project.build.finalName}/WEB-INF/web.xml</descriptor>
+                    </webApp>
+                    <reload>manual</reload>
+                    <!--<scanIntervalSeconds>10</scanIntervalSeconds>-->
+                    <!--<scanTargets>-->
+                    <!--<scanTarget>target/classes</scanTarget>-->
+                    <!--</scanTargets>-->
+                    <!--<scanTargetPatterns>-->
+                    <!--<scanTargetPattern>-->
+                    <!--<directory>src/</directory>-->
+                    <!--<includes>-->
+                    <!--<include>**/*.xml</include>-->
+                    <!--<include>**/*.properties</include>-->
+                    <!--</includes>-->
+                    <!--</scanTargetPattern>-->
+                    <!--</scanTargetPatterns>-->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

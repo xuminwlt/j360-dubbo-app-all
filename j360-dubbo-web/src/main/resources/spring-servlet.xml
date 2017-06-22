@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+       http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+
+
+    <context:component-scan base-package="me.j360.dubbo.web.api"/>
+
+    <mvc:annotation-driven validator="localValidator"
+                           message-codes-resolver="messageCodesResolver">
+
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <constructor-arg name="objectMapper">
+                    <bean id="objectMapper"
+                          class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+
+                    </bean>
+                </constructor-arg>
+            </bean>
+        </mvc:message-converters>
+        <!--<mvc:path-matching trailing-slash="false"/>-->
+    </mvc:annotation-driven>
+
+    <!-- 地区 localeResolver -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver">
+        <!--<property name="defaultLocale" value="zh_CN"/>
+        <property name="supportedLocales">
+            <list>
+                <value>zh_CN</value>
+                &lt;!&ndash;<value>zh_TW</value>&ndash;&gt;
+                &lt;!&ndash;<value>en</value>&ndash;&gt;
+            </list>
+        </property>-->
+    </bean>
+
+    <!-- 异常 handlerExceptionResolver -->
+
+    <!-- 验证器 -->
+    <bean id="localValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+    <!-- 验证code解析器 -->
+    <bean id="messageCodesResolver" class="org.springframework.validation.DefaultMessageCodesResolver">
+        <property name="prefix" value="j360."/>
+        <property name="messageCodeFormatter">
+            <value type="org.springframework.validation.DefaultMessageCodesResolver$Format">POSTFIX_ERROR_CODE</value>
+        </property>
+    </bean>
+
+    <!-- 国际化 -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="basenames">
+            <list>
+                <value>messages.validation</value>
+            </list>
+        </property>
+    </bean>
+
+    <mvc:view-controller path="/" view-name="login"/>
+    <mvc:view-controller path="/index" view-name="login"/>
+    <mvc:view-controller path="/welcome" view-name="welcome"/>
+
+    <mvc:resources mapping="/static/**" location="/static/"/>
+
+
+</beans>
