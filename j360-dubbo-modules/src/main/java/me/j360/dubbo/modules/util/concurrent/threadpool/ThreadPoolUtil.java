@@ -77,6 +77,10 @@ public class ThreadPoolUtil {
 		return new ThreadFactoryBuilder().setNameFormat(threadNamePrefix + "-%d").setDaemon(daemon).build();
 	}
 
+	public static ThreadFactory buildThreadFactory(@NotNull String threadNamePrefix, @NotNull boolean daemon, @NotNull Thread.UncaughtExceptionHandler uncaughtExceptionHandler) {
+		return new ThreadFactoryBuilder().setNameFormat(threadNamePrefix + "-%d").setDaemon(daemon).build();
+	}
+
 	/**
 	 * 防止用户没有捕捉异常导致中断了线程池中的线程, 使得SchedulerService无法继续执行.
 	 * 

@@ -18,7 +18,8 @@ public class ErrorCode extends BaseErrorCode {
     public static final ErrorCode DB_ERROR = new ErrorCode(1001,"数据库错误");
     public static final ErrorCode SYS_ERROR= new ErrorCode(1002,"系统错误");
     public static final ErrorCode PARAM_ERROR=new ErrorCode(1003,"参数异常:");
-    public static final ErrorCode GOODS_FIND_ERROR= new ErrorCode(3,"goods can't find!");
+    public static final ErrorCode BUS_ERROR= new ErrorCode(3,"event bus error!");
+
     public static final ErrorCode GOODS_FIND_SIZE_ERROR= new ErrorCode(4,"size of goods is > 1");
 
     public static final ErrorCode CARD_NOT_FOUND = new ErrorCode(5,"卡不存在");
