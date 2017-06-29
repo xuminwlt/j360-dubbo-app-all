@@ -88,6 +88,8 @@ Dubbo Filter TraceId会依赖Http Servlet的traceId存在是否,不存在则生�
 
 ### Hytrix隔离/降级/熔断
 
+1. 增加熔断配置(暂无降级方案)
+2. 无隔离配置
 
 
 ### Dubbo Result封装
@@ -101,4 +103,17 @@ Dubbo Filter TraceId会依赖Http Servlet的traceId存在是否,不存在则生�
 - 异常收集
 - Log输出
 - 实例封装
+
+
+### 并发线程池方案
+
+1. guava异步线程池
+2. Future线程池
+
+- guava EventBus封装ExceptionHandler,解决线程异常时的处理机制
+- 在ThreadFactory中不能封装SafeRunnable,否则异常不会上报
+- 在单独的线程池中的设定时,需要包装Runnable为SafeRunnable,否则可能会导致整个线程池的崩溃
+
+
+> 并发容器在进行分布式跟踪时,会丢失对应的跟踪信息,需要将对应的上下文信息写入到对应的线程中
 
