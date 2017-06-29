@@ -66,7 +66,7 @@ j360-dubbo-api
 - ID生成策略,请依赖或者远程请求ID服务器,参考 https://github.com/xuminwlt/j360-idgen
 - druid sjdbc依赖druid连接池时,对版本有要求,请勿修改druid version
 - hytrix 使用时,需要配置对应的线程池参数,Filter已经激活,无需配置
-- brave 4.2.0
+- brave 4.2.0 (4.4.0变更太大,暂不更新)
 
 
 ### 链路跟踪
