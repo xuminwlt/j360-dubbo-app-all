@@ -4,10 +4,11 @@
 
 基于dubbo的分布式工程使用demo,内容未完全完成,逐步补充
 
-版本记录:
+### 版本记录:
 
 version: 1.0 基础功能扩展
-version: 1.1 trace功能集成
+
+version: 1.1 batch批处理/trace链路跟踪功能集成
 
 
 ### 目的
@@ -107,12 +108,22 @@ https://github.com/dangdangdotcom/sharding-jdbc
 
 用户支付场景的使用,rpc适配器需要通过dubbo filter
 
-try
-commit
-cancel
+1. try
+2. commit
+3. cancel
 
-tcc实现详见: https://github.com/xuminwlt/j360-tcc
-简单的rpc实现: https://github.com/xuminwlt/j360-rpc
+> tcc实现详见: https://github.com/xuminwlt/j360-tcc
+> 简单的rpc实现: https://github.com/xuminwlt/j360-rpc
+
+### DMP数据采集
+
+客户端用户行为数据采集及分析
+
+1. 客户端上报用户行为数据到服务端dmp.log
+2. 收集dmp.log到kafka  见: flume
+3. spark-streaming实时分析 见: https://github.com/xuminwlt/j360-spark-parent
+4. kafka到hadoop, spark离线分析
+
 
 ### Hytrix隔离/降级/熔断
 
@@ -144,13 +155,3 @@ tcc实现详见: https://github.com/xuminwlt/j360-tcc
 
 
 > 并发容器在进行分布式跟踪时,会丢失对应的跟踪信息,需要将对应的上下文信息写入到对应的线程中
-
-
-### DMP数据采集
-
-客户端用户行为数据采集及分析
-
-1. 客户端上报用户行为数据到服务端dmp.log
-2. 收集dmp.log到kafka  见: flume
-3. spark-streaming实时分析 见: https://github.com/xuminwlt/j360-spark-parent
-4. kafka到hadoop, spark离线分析
