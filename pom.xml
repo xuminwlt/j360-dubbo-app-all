@@ -545,7 +545,7 @@
             </plugin>
 
             <!--打包发布版本插件
-             mvn release:clean release:prepare -Darguments="-DskipTests" -Dtag=1.1.0 -DreleaseVersion=1.1.0-RELEASE -DdevelopmentVersion=1.2.0-SNAPSHOT -Dresume=false -Ptest
+             mvn release:clean release:prepare -Darguments="-DskipTests" -Dtag=1.0 -DreleaseVersion=1.0-RELEASE -DdevelopmentVersion=1.1-SNAPSHOT -Dresume=false -Ptest
             -->
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
