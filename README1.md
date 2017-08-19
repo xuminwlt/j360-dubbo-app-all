@@ -84,7 +84,7 @@ j360-dubbo-api
 HTTP Servlet Filter基于AntPath命名规范的跟踪许可配置
 Dubbo Filter TraceId会依赖Http Servlet的traceId存在是否,不存在则生成一个
 
-> 目前该配置在会员系统运行良好,详见j360-dubbo-trace/j360-dubbo-web
+> 目前该配置在会员系统运行良好,详见modules -> j360-dubbo-trace、j360-dubbo-web
 
 链路过程如下: 
 
@@ -113,7 +113,10 @@ https://github.com/dangdangdotcom/sharding-jdbc
 3. cancel
 
 > tcc实现详见: https://github.com/xuminwlt/j360-tcc
+
 > 简单的rpc实现: https://github.com/xuminwlt/j360-rpc
+
+> 尽量使用单一环境下的本地JDBC事务,除特殊需求(支付等),尽量不使用事务提交
 
 ### DMP数据采集
 
@@ -155,3 +158,18 @@ https://github.com/dangdangdotcom/sharding-jdbc
 
 
 > 并发容器在进行分布式跟踪时,会丢失对应的跟踪信息,需要将对应的上下文信息写入到对应的线程中
+
+
+### 基于Shiro的App客户端认证方案
+
+1. Shiro在工程中的配置未定义到具体类, 详细配置见: https://github.com/xuminwlt/j360-shiro
+
+
+### Batch批处理
+
+基于Spring batch的微批次处理工程,用于定时的或者数据清洗的批处理作业, Spring batch详见: http://projects.spring.io/spring-batch/
+
+1. 提供文件滚动式输入输出
+2. 提供基于数据库(游标、分页2种)的输入输出
+
+
