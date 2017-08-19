@@ -25,6 +25,12 @@
         <module>j360-dubbo-batch</module>
     </modules>
 
+    <scm>
+        <connection>scm:git:https://github.com/xuminwlt/j360-dubbo-app-all.git</connection>
+        <url>https://github.com/xuminwlt/j360-dubbo-app-all</url>
+        <developerConnection>scm:git:https://github.com/xuminwlt/j360-dubbo-app-all.git</developerConnection>
+        <tag>1.0</tag>
+    </scm>
 
     <properties>
         <spring.data.redis.version>1.4.2.RELEASE</spring.data.redis.version>
