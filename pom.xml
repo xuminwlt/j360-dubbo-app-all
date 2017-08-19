@@ -22,6 +22,7 @@
         <module>j360-dubbo-hytrix</module>
         <module>j360-dubbo-client</module>
         <module>j360-dubbo-tcc</module>
+        <module>j360-dubbo-batch</module>
     </modules>
 
 
@@ -544,7 +545,7 @@
             </plugin>
 
             <!--打包发布版本插件
-             mvn release:clean release:prepare -Darguments="-DskipTests" -Dtag=0.1.0 -DreleaseVersion=0.1.0-RELEASE -DdevelopmentVersion=0.1.1-SNAPSHOT -Dresume=false -Ptest
+             mvn release:clean release:prepare -Darguments="-DskipTests" -Dtag=1.1.0 -DreleaseVersion=1.1.0-RELEASE -DdevelopmentVersion=1.2.0-SNAPSHOT -Dresume=false -Ptest
             -->
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
@@ -555,9 +556,9 @@
                     <releaseProfiles>release</releaseProfiles>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
 
-                    <tagNameFormat>0.1.2</tagNameFormat>
-                    <releaseVersion>0.1.2-RELEASE</releaseVersion>
-                    <developmentVersion>0.1.3-SNAPSHOT</developmentVersion>
+                    <tagNameFormat>1.1.0</tagNameFormat>
+                    <releaseVersion>1.1.0-RELEASE</releaseVersion>
+                    <developmentVersion>1.2.0-SNAPSHOT</developmentVersion>
                 </configuration>
             </plugin>
 

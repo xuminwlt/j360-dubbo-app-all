@@ -28,6 +28,7 @@
 - springfox (可选)基于web的接口文档化工具
 - autotest (可选)自动化测试模块
 - client (可选)springmvc的快速集成sample,用于演示上述分布式环境提供案例
+- batch (可选) 使用spring-batch实现微型批处理,用于批处理作业需求
 
 ### 规范说明
 
@@ -77,12 +78,15 @@ j360-dubbo-api
 HTTP Servlet Filter基于AntPath命名规范的跟踪许可配置
 Dubbo Filter TraceId会依赖Http Servlet的traceId存在是否,不存在则生成一个
 
-> 目前该配置在会员系统运行良好
+> 目前该配置在会员系统运行良好,详见j360-dubbo-trace/j360-dubbo-web
 
 ### 分表分库/读写分离
 
+sharding-jdbc 1.5.1+
+
 
 ### TCC分布式事务
+
 
 
 
