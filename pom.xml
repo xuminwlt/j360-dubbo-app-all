@@ -556,9 +556,9 @@
                     <releaseProfiles>release</releaseProfiles>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
 
-                    <tagNameFormat>1.1.0</tagNameFormat>
-                    <releaseVersion>1.1.0-RELEASE</releaseVersion>
-                    <developmentVersion>1.2.0-SNAPSHOT</developmentVersion>
+                    <tagNameFormat>1.0</tagNameFormat>
+                    <releaseVersion>1.0-RELEASE</releaseVersion>
+                    <developmentVersion>1.1-SNAPSHOT</developmentVersion>
                 </configuration>
             </plugin>
 
