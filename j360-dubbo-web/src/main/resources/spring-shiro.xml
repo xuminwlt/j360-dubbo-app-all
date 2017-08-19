@@ -1,8 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
+    <context:component-scan base-package="me.j360.dubbo.shiro"/>
+
+    <bean id="whiteListcredentialsMatcher" class="org.apache.shiro.authc.credential.SimpleCredentialsMatcher">
+
+    </bean>
+
+
+    <!-- 会话管理器 -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionValidationSchedulerEnabled" value="false"/>
+    </bean>
+
+    <!--使用原生的HttpSession，所有的分享的内容,sessionManager暂不使用-->
+    <bean id="servletContainerSessionManager" class="org.apache.shiro.web.session.mgt.ServletContainerSessionManager"/>
+
+    <!-- Subject工厂 -->
+    <bean id="subjectFactory"
+          class="xxx.xxx.StatelessDefaultSubjectFactory"/>
+
+    <bean id="atLeastOneSuccessfulStrategy" class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"/>
+
+    <!-- 认证authenticator配置 -->
+    <bean id="authenticator" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
+        <property name="authenticationStrategy" ref="atLeastOneSuccessfulStrategy"/>
+        <property name="realms">
+            <list>
+                <ref bean="userRealm"/>
+                <ref bean="authclessRealm"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 授权authorizer配置 -->
+    <bean id="authorizer" class="org.apache.shiro.authz.ModularRealmAuthorizer">
+        <property name="realms">
+            <list>
+                <ref bean="userRealm"/>
+                <ref bean="authclessRealm"/>
+            </list>
+        </property>
+    </bean>
+
+    <!--会通过不同的Token进行support-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="subjectDAO.sessionStorageEvaluator.sessionStorageEnabled"
+                  value="false"/>
+        <property name="subjectFactory" ref="subjectFactory"/>
+        <property name="sessionManager" ref="servletContainerSessionManager"/>
+        <property name="authenticator" ref="authenticator"/>
+        <property name="authorizer" ref="authorizer"/>
+    </bean>
+
+    <!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager"/>
+        <property name="arguments" ref="securityManager"/>
+    </bean>
+
+    <bean id="authclessFilter" class="xxx.xxx.xxx.StatelessAuthclessFilter" />
+
+
+    <!-- Shiro的Web过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="filters">
+            <util:map>
+                <entry key="authcless" value-ref="authclessFilter"/>
+            </util:map>
+        </property>
+
+        <property name="filterChainDefinitions">
+            <value>
+                <!--for test
+                /** = anon-->
+                <!--匿名接口-->
+                /static/** = anon
+                /html/** = anon
+                /css/** = anon
+                <!--身份验证-->
+                /api/** = context,smart
+
+            </value>
+        </property>
+    </bean>
+
+    <!-- Shiro生命周期处理器-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
 
 
