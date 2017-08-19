@@ -129,10 +129,7 @@ public class BraveDubboServerFilter implements Filter {
         @Override
         @SuppressWarnings("unchecked")
         public Collection<KeyValueAnnotation> responseAnnotations() {
-            return result.getException() == null
-                    ? Collections.<KeyValueAnnotation>emptyList()
-                    : Collections.singletonList(KeyValueAnnotation.create(DubboKeys.DUBBO_EXCEPTION_NAME, result.getException().getMessage()));
-
+            return result.hasException() ? Collections.singletonList(KeyValueAnnotation.create(DubboKeys.DUBBO_EXCEPTION_NAME, result.toString())): Collections.<KeyValueAnnotation>emptyList();
         }
 
     }

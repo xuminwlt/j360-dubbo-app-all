@@ -123,7 +123,7 @@ public class HttpBraveServletFilter implements Filter {
 
         //如果不在范围内则直接排除
         if (preHandle(request,response) == false) {
-            filterChain.doFilter(request, response);
+            //filterChain.doFilter(request, response);
         }
 
         String alreadyFilteredAttributeName = getAlreadyFilteredAttributeName();

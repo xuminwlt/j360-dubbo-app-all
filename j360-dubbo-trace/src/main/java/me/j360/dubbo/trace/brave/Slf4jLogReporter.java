@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import zipkin.Span;
 import zipkin.reporter.Reporter;
 
+import java.util.Collections;
+
 
 /**
  * Package: me.j360.dubbo.client
@@ -28,6 +30,6 @@ public class Slf4jLogReporter implements Reporter<Span> {
 
     public void report(Span span) {
         Util.checkNotNull(span, "Null span", new Object[0]);
-        this.logger.info(span.toString());
+        this.logger.info(Collections.singletonList(span).toString());
     }
 }

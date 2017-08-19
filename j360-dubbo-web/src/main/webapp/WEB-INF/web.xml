@@ -4,12 +4,45 @@
 		 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 		 version="3.1">
 
-	<display-name>j360-admin</display-name>
+	<display-name>j360-dubbp-web</display-name>
 
-	<!-- ========================================================== -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			me.j360.dubbo.bootstrap.ApplicationConfiguration
+		</param-value>
+	</context-param>
+	<context-param>
+		<param-name>spring.profiles.active</param-name>
+		<param-value>${mode}</param-value>
+	</context-param>
 
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 
-	<!-- ========================================================== -->
+		<init-param>
+			<param-name>contextClass</param-name>
+			<param-value>
+				org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>
+				me.j360.dubbo.bootstrap.WebApplicationBootstrap
+			</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
+	</servlet>
 
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
@@ -23,32 +56,66 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
+	<!-- 解决HTTP PUT请求Spring无法获取请求参数的问题,这个filter对于我们系统木用,因为我们系统没有请求会传_method参数 -->
+	<filter>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+
+	<!-- 真正解决HTTP PUT请求Spring无法获取请求参数的问题 -->
+	<filter>
+		<filter-name>HttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>
+	</filter>
+	<!-- shiro 安全过滤器-->
+	<filter>
+		<filter-name>shiroFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<async-supported>true</async-supported>
+		<init-param>
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<!--使用spring拦截器时,注销此处filter拦截,两者只能使用其一-->
+	<filter>
+		<filter-name>braveFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+
 	<filter-mapping>
 		<filter-name>CharacterEncodingFilter</filter-name>
-		<servlet-name>applicationServlet</servlet-name>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
+		<servlet-name>dispatcher</servlet-name>
 	</filter-mapping>
 
+	<filter-mapping>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<servlet-name>dispatcher</servlet-name>
+	</filter-mapping>
 
-	<!-- ========================================================== -->
+	<filter-mapping>
+		<filter-name>HttpMethodFilter</filter-name>
+		<servlet-name>dispatcher</servlet-name>
+	</filter-mapping>
 
-	<servlet>
-		<display-name>Spring总调度Servlet</display-name>
-		<servlet-name>applicationServlet</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:spring-servlet.xml</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+	<filter-mapping>
+		<filter-name>braveFilter</filter-name>
+		<url-pattern>/api/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>shiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
 
 	<servlet-mapping>
-		<servlet-name>applicationServlet</servlet-name>
-		<url-pattern>/</url-pattern>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
-
-	<!-- ========================================================== -->
 
 </web-app>
