@@ -8,8 +8,8 @@
     <!--web componet-->
     <context:component-scan base-package="me.j360.dubbo.web"/>
 
-    <!--import local-->
-    <import resource="spring-shiro.xml"></import>
+    <!--import local
+    <import resource="spring-shiro.xml"></import>-->
 
 
 </beans>

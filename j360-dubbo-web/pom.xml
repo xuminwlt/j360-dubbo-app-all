@@ -144,16 +144,10 @@
 
     <build>
         <resources>
-            <!--<resource>-->
-            <!--<directory>src/main/resources</directory>-->
-            <!--</resource>-->
-            <!--<resource>-->
-            <!--<directory>src/main/resources</directory>-->
-            <!--<filtering>true</filtering>-->
-            <!--<includes>-->
-            <!--<include>**.properties</include>-->
-            <!--</includes>-->
-            <!--</resource>-->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
         </resources>
         <plugins>
             <!-- war -->
@@ -175,8 +169,6 @@
                 </dependencies>
                 <configuration>
                     <webAppSourceDirectory>${project.basedir}/src/main/webapp</webAppSourceDirectory>
-                    <!--<classesDirectory>${project.build.outputDirectory}</classesDirectory>-->
-                    <!--<testClassesDirectory>${project.build.testOutputDirectory}</testClassesDirectory>-->
                     <webApp>
                         <!-- webapp的上下文路径 -->
                         <contextPath>/</contextPath>
@@ -184,19 +176,19 @@
                         <descriptor>target/${project.build.finalName}/WEB-INF/web.xml</descriptor>
                     </webApp>
                     <reload>manual</reload>
-                    <!--<scanIntervalSeconds>10</scanIntervalSeconds>-->
-                    <!--<scanTargets>-->
-                    <!--<scanTarget>target/classes</scanTarget>-->
-                    <!--</scanTargets>-->
-                    <!--<scanTargetPatterns>-->
-                    <!--<scanTargetPattern>-->
-                    <!--<directory>src/</directory>-->
-                    <!--<includes>-->
-                    <!--<include>**/*.xml</include>-->
-                    <!--<include>**/*.properties</include>-->
-                    <!--</includes>-->
-                    <!--</scanTargetPattern>-->
-                    <!--</scanTargetPatterns>-->
+                    <!--<scanIntervalSeconds>10</scanIntervalSeconds>
+                    <scanTargets>
+                    <scanTarget>target/classes</scanTarget>
+                    </scanTargets>
+                    <scanTargetPatterns>
+                    <scanTargetPattern>
+                    <directory>src/</directory>
+                    <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                    </includes>
+                    </scanTargetPattern>
+                    </scanTargetPatterns>-->
                 </configuration>
             </plugin>
         </plugins>

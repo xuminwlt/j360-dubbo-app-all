@@ -21,5 +21,9 @@
             <groupId>com.dangdang</groupId>
             <artifactId>sharding-jdbc-config-spring</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
     </dependencies>
 </project>
