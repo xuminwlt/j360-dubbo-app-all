@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:beans="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+
+    <import resource="/application-job.xml"/>
+    <context:component-scan base-package="me.j360.dubbo.batch.task"/>
+
+    <!--执行器-->
+
+    <task:scheduler id="scheduler" pool-size="1"/>
+    <task:executor id="poolTaskExecutor" pool-size="1" queue-capacity="1" rejection-policy="ABORT"/>
+
+    <!--简单的固定间隔时间的定时任务,调试换成quartz-->
+    <task:scheduled-tasks scheduler="scheduler">
+        <task:scheduled ref="jobTaskScheduled" method="run" cron="0 0 */1 * * ?"/>
+    </task:scheduled-tasks>
+
+</beans>

@@ -27,7 +27,7 @@ version: 1.1 batch批处理/trace链路跟踪功能集成
 - biz 接口实现模块
 - dao 数据访问模块
 - web web集成模块
-- sjdbc (可选)基于sjdbc的分表分库+读写分离模块,需要注意sql支持列表,不含id生成策略
+- sjdbc (可选)基于sjdbc的分表分库+读写分离模块,需要注意sql支持列表
 - trace (可选)基于brave定制的分布式跟踪集成模块
 - hytrix (可选)提供基于hytrix的隔离降级断路策略支持
 - tcc (可选)提供基于tcc的分布式最终一致性事务支持
@@ -71,7 +71,7 @@ j360-dubbo-api
 ### 三方库依赖
 
 - ID生成策略,请依赖或者远程请求ID服务器,参考 https://github.com/xuminwlt/j360-idgen
-- druid sjdbc依赖druid连接池时,对版本有要求,请勿修改druid version
+- druid sjdbc1.5.0+不再依赖druid连接池时
 - hytrix 使用时,需要配置对应的线程池参数,Filter已经激活,无需配置
 - brave 4.2.0 (4.4.0变更太大,暂不更新)
 
