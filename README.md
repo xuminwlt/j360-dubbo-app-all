@@ -92,6 +92,8 @@ Dubbo Filter TraceId会依赖Http Servlet的traceId存在是否,不存在则生�
 2. 收集zipkin.log到kafka 见:flume
 3. 读取kafka数据到elasticsearch 见: https://github.com/xuminwlt/j360-zipkin-parent
 
+> 并发跟踪支持,使用InheritableThreadLocal继承ThreadLocal特性实现Executor的并发异步执行跟踪,提升吞吐量
+
 
 ### 分表分库/读写分离
 
@@ -157,7 +159,8 @@ https://github.com/dangdangdotcom/sharding-jdbc
 - 在单独的线程池中的设定时,需要包装Runnable为SafeRunnable,否则可能会导致整个线程池的崩溃
 
 
-> 并发容器在进行分布式跟踪时,会丢失对应的跟踪信息,需要将对应的上下文信息写入到对应的线程中
+> 并发容器在进行分布式跟踪时,会丢失对应的跟踪信息,需要配置InheritableThreadLocal将对应的上下文信息写入到对应的线程中
+> 并发线程池在执行异步任务时,需要对工作窃取线程池分开配置,便于管理,详见DEMO中:跨rpc并发,jvm内部并发
 
 
 ### 基于Shiro的App客户端认证方案
