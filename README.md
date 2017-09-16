@@ -8,18 +8,18 @@
 
 #### version: 1.0 
 
-1.基础功能扩展
+1. 基础功能扩展
 
 #### version: 1.1 
 
 1. batch批处理
-2.trace链路跟踪功能集成
-3.retry重试机制
+2. trace链路跟踪功能集成
+3. retry重试机制
 
 #### version: 1.2 
 
-1.cache with Redission
-2.Guava cache
+1. cache with Redission
+2. Guava cache
 
 
 ### 目的
