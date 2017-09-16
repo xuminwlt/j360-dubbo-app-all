@@ -3,7 +3,7 @@
     <parent>
         <artifactId>j360-dubbo</artifactId>
         <groupId>me.j360.dubbo</groupId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.0-RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -15,12 +15,12 @@
         <dependency>
             <groupId>me.j360.dubbo</groupId>
             <artifactId>j360-dubbo-modules</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <version>1.0-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>me.j360.dubbo</groupId>
             <artifactId>j360-dubbo-base</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <version>1.0-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.batch</groupId>
