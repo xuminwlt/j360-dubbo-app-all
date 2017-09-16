@@ -175,4 +175,14 @@ https://github.com/dangdangdotcom/sharding-jdbc
 1. 提供文件滚动式输入输出
 2. 提供基于数据库(游标、分页2种)的输入输出
 
+### Redis缓存设计
+
+> 基于Redission的缓存设计方案在不同场景中的使用方式
+
+1. Cache-Aside,最重要的缓存方案,如果穿透则到数据源回源
+2. Cache-As-SoR(Read-through,Write-through,Write-behind),使用Cache自带的功能进行回源更新,不侵入业务代码,如Guava的load方案
+
+Read-through:读模式
+Write-through:同步双写
+Write-behind:异步回写模式
 
