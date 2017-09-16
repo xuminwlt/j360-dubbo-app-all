@@ -6,9 +6,20 @@
 
 ### 版本记录:
 
-version: 1.0 基础功能扩展
+#### version: 1.0 
 
-version: 1.1 batch批处理/trace链路跟踪功能集成
+1.基础功能扩展
+
+#### version: 1.1 
+
+1. batch批处理
+2.trace链路跟踪功能集成
+3.retry重试机制
+
+#### version: 1.2 
+
+1.cache with Redission
+2.Guava cache
 
 
 ### 目的

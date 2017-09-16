@@ -21,6 +21,7 @@
         <module>j360-dubbo-client</module>
         <module>j360-dubbo-tcc</module>
         <module>j360-dubbo-batch</module>
+        <module>j360-dubbo-redission</module>
     </modules>
 
     <scm>
