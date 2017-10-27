@@ -46,6 +46,7 @@
 - autotest (可选)自动化测试模块
 - client (可选)springmvc的快速集成sample,用于演示上述分布式环境提供案例
 - batch (可选) 使用spring-batch实现微型批处理,用于批处理作业需求
+- redission (可选) 使用redission实现的Redis缓存方案工具
 
 ### 规范说明
 
@@ -196,4 +197,15 @@ https://github.com/dangdangdotcom/sharding-jdbc
 Read-through:读模式
 Write-through:同步双写
 Write-behind:异步回写模式
+
+sample: 
+
+```
+
+单个:UserRepository.getGoods(Long itemId)
+
+多个:UserRepository.findIn(List<Long> ids)
+
+```
+
 
