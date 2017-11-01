@@ -11,9 +11,14 @@
 
 
     <bean id="idReaderListener" class="me.j360.dubbo.batch.listener.IdReaderListener"/>
+    <bean id ="sampleStepListener" class="me.j360.dubbo.batch.listener.SampleStepListener"/>
+
     <batch:job id="batchJob" job-repository="jobRepository" restartable="true">
         <batch:step id="videoPostStep" allow-start-if-complete="true">
             <batch:tasklet >
+                <batch:listeners>
+                    <batch:listener ref="sampleStepListener"/>
+                </batch:listeners>
                 <batch:chunk reader="userReader" processor="userInfoItemProcess" writer="userInfoJdbcItemWriter"
                              commit-interval="1000" skip-limit="10" retry-limit="3">
                     <batch:skippable-exception-classes>
@@ -42,15 +47,15 @@
                 <property name="dataSource" ref="dataSource"></property>
                 <property name="selectClause" value="select id, uid create_time"/>
                 <property name="fromClause" value="from user"/>
-                <property name="whereClause" value="where is_del = 0 "/>
+                <property name="whereClause" value="where is_del = 0 and id > :id "/>
                 <property name="sortKey" value="id"/>
             </bean>
         </property>
-        <!--<property name="parameterValues">
+        <property name="parameterValues">
             <map>
                 <entry key="id" value="#{stepExecutionContext[id]}"/>
             </map>
-        </property>-->
+        </property>
         <property name="pageSize" value="5"/>
         <property name="saveState" value="true"/>
     </bean>
