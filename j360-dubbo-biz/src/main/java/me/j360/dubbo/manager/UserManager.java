@@ -9,6 +9,7 @@ import me.j360.dubbo.base.exception.ServiceException;
 import me.j360.dubbo.common.concurrent.DefaultAsyncEventBus;
 import me.j360.dubbo.event.RegisterEvent;
 import me.j360.dubbo.repository.UserRepository;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionStatus;
@@ -36,6 +37,8 @@ public class UserManager {
     private TransactionTemplate transactionTemplate;
     @Autowired
     private DefaultAsyncEventBus eventBus;
+    @Autowired
+    private RedissonClient redissonClient;
 
     //依赖外部的RPC写在Manager中,比如
     //@Autowired
