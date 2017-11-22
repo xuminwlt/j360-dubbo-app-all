@@ -11,6 +11,7 @@ import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.rpc.Invocation;
 import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.Result;
+import com.alibaba.dubbo.rpc.RpcResult;
 import com.netflix.hystrix.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,5 +61,10 @@ public class DubboHystrixCommand extends HystrixCommand<Result> {
     @Override
     protected Result run() throws Exception {
         return invoker.invoke(invocation);
+    }
+
+    @Override
+    protected Result getFallback() {
+        return new RpcResult(new RuntimeException("1009,服务器忙,请稍后再试"));
     }
 }
