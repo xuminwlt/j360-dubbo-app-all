@@ -6,6 +6,8 @@ import me.j360.dubbo.api.constant.ErrorCode;
 import me.j360.dubbo.api.model.domain.UserDO;
 import me.j360.dubbo.api.model.param.user.UserDTO;
 import me.j360.dubbo.base.exception.ServiceException;
+import me.j360.dubbo.common.concurrent.DefaultAsyncEventBus;
+import me.j360.dubbo.event.RegisterEvent;
 import me.j360.dubbo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,6 +34,8 @@ public class UserManager {
     private UserRepository userRepository;
     @Autowired
     private TransactionTemplate transactionTemplate;
+    @Autowired
+    private DefaultAsyncEventBus eventBus;
 
     //依赖外部的RPC写在Manager中,比如
     //@Autowired
@@ -96,6 +100,10 @@ public class UserManager {
             log.error("user-bind-voucherpass transsction error !", e);
 
         }
+
+        RegisterEvent event = new RegisterEvent();
+        event.setUid(1L);
+        eventBus.post(event);
         //UserDO.setErrorMap(errorCodeMap);
         //TODO Result
         return new UserDO();
