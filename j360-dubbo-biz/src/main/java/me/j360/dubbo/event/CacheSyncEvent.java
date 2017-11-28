@@ -18,4 +18,6 @@ public class CacheSyncEvent extends BaseDO {
 
     private String table;
     private String column;
+
+    private long cacheCount;
 }

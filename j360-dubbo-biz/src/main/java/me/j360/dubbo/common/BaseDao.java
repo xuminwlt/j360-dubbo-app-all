@@ -56,6 +56,6 @@ public interface BaseDao<M extends BaseModel<ID>, ID extends Serializable, Q ext
 
 
 
-    Long getCount(String countColumn, ID id);
+    Long getCount(String countColumn, Long id);
 
 }
