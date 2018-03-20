@@ -24,4 +24,10 @@
     <context:component-scan base-package="me.j360.dubbo.service"/>
     <context:component-scan base-package="me.j360.dubbo.manager"/>
     <context:component-scan base-package="me.j360.dubbo.repository"/>
+
+    <bean id="defaultAsyncEventBus" class="me.j360.dubbo.common.concurrent.DefaultAsyncEventBus"/>
+    <bean id="defaultEventBus" class="me.j360.dubbo.common.concurrent.DefaultEventBus"/>
+    <bean id="defaultExecutor" class="me.j360.dubbo.common.concurrent.DefaultExecutor"/>
+    <bean id="defaultPriorityExecutor" class="me.j360.dubbo.common.concurrent.DefaultPriorityExecutor"/>
+
 </beans>

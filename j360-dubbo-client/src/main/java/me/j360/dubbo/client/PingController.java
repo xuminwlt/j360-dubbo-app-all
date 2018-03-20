@@ -3,7 +3,9 @@ package me.j360.dubbo.client;
 import com.google.common.base.Objects;
 import lombok.extern.slf4j.Slf4j;
 import me.j360.dubbo.api.model.param.user.UserDTO;
+import me.j360.dubbo.api.model.result.UserResult;
 import me.j360.dubbo.api.service.UserService;
+import me.j360.dubbo.base.model.result.DefaultResult;
 import me.j360.dubbo.modules.util.mapper.JsonMapper;
 import org.apache.log4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import static me.j360.dubbo.trace.brave.DubboKeys.ZIPKIN_TRACEID_MDC;
@@ -49,6 +52,18 @@ public class PingController {
 
     @Autowired
     private UserService userService;
+
+
+    @RequestMapping(value = "/friends")
+    public ResponseEntity<Void> friends(HttpServletRequest request) throws IOException {
+
+        DefaultResult<UserResult> result = userService.listFriends(1L);
+        Set<Long> friends = result.getData().getFriends();
+
+        log.info("friends : {}", friends);
+
+        return ResponseEntity.noContent().build();
+    }
 
 
     @RequestMapping(value = "/sync")

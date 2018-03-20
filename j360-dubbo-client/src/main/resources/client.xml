@@ -16,7 +16,7 @@
     <dubbo:registry address="zookeeper://localhost:2181" />
 
     <!--引入apm监控+断路器-->
-    <dubbo:consumer filter="braveConsumer,hystrix"/>
+    <!--<dubbo:consumer filter="braveConsumer,hystrix"/>-->
 
     <!-- 生成远程服务代理，userService -->
     <dubbo:reference id="userService"

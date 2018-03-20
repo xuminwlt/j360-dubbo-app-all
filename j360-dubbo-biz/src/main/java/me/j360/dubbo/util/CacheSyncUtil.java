@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author: min_xu
  * @date: 2017/11/28 下午4:29
- * 说明：
+ * 说明：根据需要定义成SpringBean或者工具类,或者executer类
  */
 
 @Slf4j
@@ -24,7 +24,8 @@ public class CacheSyncUtil {
 
 
     /**
-     * 用于重试级别的MQ模式的回写Redis
+     * 用于重试级别的MQ模式的Consumer回写Redis
+     * 返回false则进行业务重试,对于mq不返回ack重试
      * @param id
      * @param column
      * @param key
@@ -143,7 +144,7 @@ public class CacheSyncUtil {
         RAtomicLong rResultLong = getSourceToCacheOnce(id, column, key, rCacheLong, redissonClient, baseDao);
         if (Objects.isNull(rResultLong)) {
             //TODO 进入MQ模式
-
+            //mqProducter.send(message);
             return 0L;
         }
 

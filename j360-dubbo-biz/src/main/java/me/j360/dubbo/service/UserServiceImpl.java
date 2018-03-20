@@ -1,9 +1,11 @@
 package me.j360.dubbo.service;
 
+import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import me.j360.dubbo.api.constant.ErrorCode;
 import me.j360.dubbo.api.model.domain.UserDO;
 import me.j360.dubbo.api.model.param.user.UserDTO;
+import me.j360.dubbo.api.model.result.UserResult;
 import me.j360.dubbo.api.service.UserService;
 import me.j360.dubbo.base.exception.RepositoryException;
 import me.j360.dubbo.base.exception.ServiceException;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Set;
 
 /**
  * Package: me.j360.dubbo.service
@@ -97,6 +100,18 @@ public class UserServiceImpl implements UserService {
             log.error("addItem failure:"+userDTO, th);
             return DefaultResult.fail( ErrorCode.SYS_ERROR.getErrorCode(),ErrorCode.SYS_ERROR.getErrorMsg());
         }
+    }
+
+    @Override
+    public DefaultResult<UserResult> listFriends(Long uid) {
+        UserResult userResult = new UserResult();
+        Set<Long> sets = Sets.newLinkedHashSet();
+        sets.add(2L);
+        sets.add(1L);
+        sets.add(4L);
+        sets.add(3L);
+        userResult.setFriends(sets);
+        return DefaultResult.success(userResult);
     }
 
 

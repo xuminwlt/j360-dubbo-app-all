@@ -2,6 +2,7 @@ package me.j360.dubbo.api.service;
 
 import me.j360.dubbo.api.model.domain.UserDO;
 import me.j360.dubbo.api.model.param.user.UserDTO;
+import me.j360.dubbo.api.model.result.UserResult;
 import me.j360.dubbo.base.model.result.DefaultPageResult;
 import me.j360.dubbo.base.model.result.DefaultResult;
 
@@ -18,4 +19,6 @@ public interface UserService {
     DefaultPageResult<UserDO> listUser(UserDTO options);
 
     DefaultResult<UserDO> saveUser(UserDTO options);
+
+    DefaultResult<UserResult> listFriends(Long uid);
 }

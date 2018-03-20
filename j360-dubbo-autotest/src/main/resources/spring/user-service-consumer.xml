@@ -8,36 +8,9 @@
   http://code.alibabatech.com/schema/dubbo
   http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
   
-  <dubbo:application name="ic-auto-test"/>
-  <dubbo:registry address="zookeeper://10.0.128.129:2181"/>
-  <dubbo:reference id="itemPublishService" version="DEVELOP"  interface="com.pajk.ic.api.service.item.ItemPublishService" url="dubbo://10.0.128.178:30110" timeout="60000"/>
-  <dubbo:reference id="itemQueryService" version="DEVELOP" interface="com.pajk.ic.api.service.item.ItemQueryService" url="dubbo://10.0.128.178:30110" timeout="60000"/>
-  <dubbo:reference id="categoryService" version="DEVELOP" interface="com.pajk.ic.api.service.item.CategoryService" url="dubbo://10.0.128.178:30110" timeout="60000"/>
-  <dubbo:reference id="bannerRecommendService" version="DEVELOP" interface="com.pajk.ic.api.service.recommend.BannerRecommendService" url="dubbo://10.0.128.178:30110" timeout="60000"/>
-  <dubbo:reference id="itemRecommendService" version="DEVELOP" interface="com.pajk.ic.api.service.recommend.ItemRecommendService" url="dubbo://10.0.128.178:30110" timeout="60000"/>
-  <dubbo:reference id="servService" version="DEVELOP" interface="com.pajk.ic.api.service.serv.ServService" url="dubbo://10.0.128.178:30110" timeout="60000"/>
-  <dubbo:reference id="serveCategoryService" version="DEVELOP" interface="com.pajk.ic.api.service.serve.ServeCategoryService" url="dubbo://10.0.128.178:30110" timeout="60000"/>
-<!--  
-	<bean id="tairManager"
-		class="com.pajk.user.service.common.tair.TairManagerFactoryBean"
-		destroy-method="destroy">
-		<property name="configServer" value="10.0.128.118:5198" />
-		<property name="groupName" value="p_group1" />
-		<property name="timeout" value="2000" />
-	</bean>
+  <dubbo:application name="user-auto-test"/>
+  <dubbo:registry address="zookeeper://localhost:2181"/>
+  <dubbo:reference id="userService"   interface="me.j360.dubbo.api.service.UserService" timeout="60000"/>
 
-	<bean id="smsInfoIndex" class="com.pajk.user.dal.index.TairIndex">
-        <constructor-arg name="namespace" value="SMSINFO_INDEX"/>
-        <constructor-arg name="tairManager" ref="tairManager"/>
-        <constructor-arg name="keyClass" value="java.lang.String"/>
-        <constructor-arg name="valueClass" value="com.pajk.user.service.login.sms.SmsPasswordManager.SmsInfo"/>
-    </bean>
-    
-	<bean id="mobileToUserIdIndex" class="com.pajk.user.dal.index.TairIndex">
-		<constructor-arg name="namespace" value="MOBILE_REVINDEX" />
-		<constructor-arg name="tairManager" ref="tairManager" />
-		<constructor-arg name="keyClass" value="java.lang.Long" />
-		<constructor-arg name="valueClass" value="java.lang.Long" />
-	</bean>
-    -->
+
 </beans>

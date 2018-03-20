@@ -22,6 +22,7 @@
         <module>j360-dubbo-tcc</module>
         <module>j360-dubbo-batch</module>
         <module>j360-dubbo-redission</module>
+        <module>j360-dubbo-sjdbc2</module>
     </modules>
 
     <scm>
