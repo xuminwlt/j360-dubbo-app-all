@@ -20,6 +20,7 @@
 
 1. cache with Redission
 2. Guava cache
+3. cache sync to Mysql -> Redis缓存回源方案
 
 
 ### 目的
