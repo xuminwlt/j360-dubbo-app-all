@@ -1,9 +1,8 @@
-package me.j360.dubbo.event;
+package me.j360.dubbo.cache.event;
 
 import com.google.common.eventbus.Subscribe;
-import me.j360.dubbo.api.model.param.user.UserDTO;
+import me.j360.dubbo.cache.CacheSyncManager;
 import me.j360.dubbo.common.concurrent.DefaultAsyncEventBus;
-import me.j360.dubbo.manager.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -21,7 +20,7 @@ import javax.annotation.PostConstruct;
 public class CacheSyncListener {
 
     private DefaultAsyncEventBus eventBus;
-    private UserManager userManager;
+    private CacheSyncManager cacheSyncManager;
 
     @PostConstruct
     public void init() {
@@ -29,16 +28,14 @@ public class CacheSyncListener {
     }
 
     @Autowired
-    public CacheSyncListener(DefaultAsyncEventBus defaultAsyncEventBus, UserManager userManager) {
+    public CacheSyncListener(DefaultAsyncEventBus defaultAsyncEventBus, CacheSyncManager cacheSyncManager) {
         this.eventBus = defaultAsyncEventBus;
-        this.userManager = userManager;
+        this.cacheSyncManager = cacheSyncManager;
     }
 
     @Subscribe
-    public void handler(RegisterEvent event) {
-        Long uid = event.getUid();
-        //sample
-        userManager.insert(new UserDTO());
+    public void handler(CacheSyncEvent event) {
+        cacheSyncManager.writeStepCount(event);
     }
 
 

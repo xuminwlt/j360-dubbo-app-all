@@ -34,7 +34,7 @@
 
     <properties>
         <spring.data.redis.version>1.4.2.RELEASE</spring.data.redis.version>
-        <spring.version>4.1.6.RELEASE</spring.version>
+        <spring.version>4.3.9.RELEASE</spring.version>
         <project.encoding>UTF-8</project.encoding>
         <lombok.version>1.14.8</lombok.version>
         <logback.version>1.1.2</logback.version>
@@ -173,6 +173,11 @@
                         <groupId>commons-logging</groupId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jms</artifactId>
+                <version>${spring.version}</version>
             </dependency>
 
             <dependency>

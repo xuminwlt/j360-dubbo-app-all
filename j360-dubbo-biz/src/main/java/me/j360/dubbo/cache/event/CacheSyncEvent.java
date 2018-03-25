@@ -1,4 +1,4 @@
-package me.j360.dubbo.event;
+package me.j360.dubbo.cache.event;
 
 import lombok.Data;
 import me.j360.dubbo.base.model.domian.BaseDO;
@@ -12,12 +12,12 @@ import me.j360.dubbo.base.model.domian.BaseDO;
 @Data
 public class CacheSyncEvent extends BaseDO {
 
-    private String stepKey;
-    private String countRangeStep;
-    private String timeRangeStep;
+    private String cacheKey;
 
+    private int index;
     private String table;
     private String column;
+    private Long id;
 
-    private long cacheCount;
+    private long cacheValue;
 }
