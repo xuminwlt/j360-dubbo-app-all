@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoding>UTF-8</encoding>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern><![CDATA[%date %level [%thread] %logger{10} [%file:%line] traceId:%X{zipkinTraceId} spanId:%X{zipkinSpanId} %msg%n]]></pattern>
+		</layout>
+	</appender>
+
+	<appender name="PROJECT" class="ch.qos.logback.core.FileAppender">
+		<file>logs/j360-dubbo.log</file>
+		<encoding>UTF-8</encoding>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>
+				logs/j360-dubbo.log.%d{yyyy-MM-dd}
+			</FileNamePattern>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern><![CDATA[%date %level [%thread] %logger{10} [%file:%line] %msg%n]]></pattern>
+		</layout>
+	</appender>
+
+	<root>
+		<level value="info" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="PROJECT" />
+	</root>
+
+	<appender name="DMPLOG" class="ch.qos.logback.core.ConsoleAppender">
+		<prudent>true</prudent>
+		<encoder>
+			<pattern>%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!--服务端生成的用户注册的dmp信息 注册时间\t{"uid":"14032736","reg-type":"注册类型","os-type":"系统类型","channel":"包渠道来源"}-->
+	<logger name="zipkin" level="info" additivity="false">
+		<appender-ref ref="DMPLOG"/>
+	</logger>
+
+</configuration>

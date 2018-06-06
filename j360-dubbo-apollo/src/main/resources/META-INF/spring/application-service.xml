@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:apollo="http://www.ctrip.com/schema/apollo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd http://www.ctrip.com/schema/apollo http://www.ctrip.com/schema/apollo.xsd"
+       default-lazy-init="true">
+
+    <!-- 这个是最简单的配置形式，一般应用用这种形式就可以了，用来指示Apollo注入application namespace的配置到Spring环境中 -->
+    <apollo:config/>
+
+    <!-- Enable @Transactional support -->
+    <tx:annotation-driven/>
+
+    <!-- Enable @AspectJ support -->
+    <aop:aspectj-autoproxy/>
+
+    <!-- Activates scanning of @Autowired -->
+    <context:annotation-config/>
+
+    <context:component-scan base-package="me.j360.dubbo.apollo.repository"/>
+    <context:component-scan base-package="me.j360.dubbo.apollo.common"/>
+
+    <bean id="defaultAsyncEventBus" class="me.j360.dubbo.apollo.common.DefaultAsyncEventBus"/>
+
+</beans>

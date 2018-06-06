@@ -48,7 +48,7 @@
 - client (可选)springmvc的快速集成sample,用于演示上述分布式环境提供案例
 - batch (可选) 使用spring-batch实现微型批处理,用于批处理作业需求
 - redission (可选) 使用redission实现的Redis缓存方案工具
-
+- rocketmq (可选) 使用rocketmq替换activemq
 
 ### 规范说明
 

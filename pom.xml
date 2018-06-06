@@ -23,6 +23,8 @@
         <module>j360-dubbo-batch</module>
         <module>j360-dubbo-redission</module>
         <module>j360-dubbo-sjdbc2</module>
+        <module>j360-dubbo-rocketmq</module>
+        <module>j360-dubbo-apollo</module>
     </modules>
 
     <scm>
