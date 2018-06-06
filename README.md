@@ -23,6 +23,15 @@
 3. cache sync to Mysql -> Redis缓存回源方案
 
 
+#### version: 1.3
+1. RocketMQ
+2. Apollo
+
+
+RoadMap
+#### version: 1.4
+1. TiDB
+
 ### 目的
 
 该工程主要围绕基于分布式DUBBO框架的**业务开发**中的开发规范定义,包括module、分包、类的抽象、配置文件、集成开发测试、分布式链路收集等,
@@ -49,6 +58,7 @@
 - batch (可选) 使用spring-batch实现微型批处理,用于批处理作业需求
 - redission (可选) 使用redission实现的Redis缓存方案工具
 - rocketmq (可选) 使用rocketmq替换activemq
+- apollo (可选) 使用apollo,apollo-client依赖需要使用本地私服,无法编译请删除该模块
 
 ### 规范说明
 
