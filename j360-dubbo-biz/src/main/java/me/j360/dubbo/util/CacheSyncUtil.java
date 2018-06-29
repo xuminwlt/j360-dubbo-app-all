@@ -2,9 +2,9 @@ package me.j360.dubbo.util;
 
 import lombok.extern.slf4j.Slf4j;
 import me.j360.dubbo.base.constant.AppConfig;
+import me.j360.dubbo.cache.event.CacheSyncEvent;
 import me.j360.dubbo.common.BaseDao;
 import me.j360.dubbo.common.concurrent.DefaultAsyncEventBus;
-import me.j360.dubbo.event.CacheSyncEvent;
 import org.redisson.api.RAtomicLong;
 import org.redisson.api.RedissonClient;
 
@@ -151,7 +151,7 @@ public class CacheSyncUtil {
         long cacheCount = rResultLong.incrementAndGet();
         //进入步长模式,调用Event
         CacheSyncEvent event = new CacheSyncEvent();
-        event.setCacheCount(cacheCount);
+        event.setCacheValue(cacheCount);
         eventBus.post(event);
 
         return cacheCount;
