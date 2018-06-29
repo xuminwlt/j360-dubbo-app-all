@@ -557,22 +557,11 @@
                     <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
                 </configuration>
             </plugin>
-
-            <!--打包发布版本插件
-             mvn release:clean release:prepare -Darguments="-DskipTests" -Dtag=1.0 -DreleaseVersion=1.0-RELEASE -DdevelopmentVersion=1.1-SNAPSHOT -Dresume=false -Ptest
-            -->
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5.3</version>
                 <configuration>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <goals>deploy</goals>
-                    <releaseProfiles>release</releaseProfiles>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-
-                    <tagNameFormat>1.1</tagNameFormat>
-                    <releaseVersion>1.1-RELEASE</releaseVersion>
-                    <developmentVersion>1.2-SNAPSHOT</developmentVersion>
                 </configuration>
             </plugin>
 
