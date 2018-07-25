@@ -260,3 +260,12 @@ lock.tryLock()
 1.2.1 重试失败，直接返回0
 
 1.2.2 重试成功，返回值
+
+### Swagger API描述服务
+
+如何搭建统一的Api文档描述服务器
+- 详细配置见: https://github.com/xuminwlt/j360-swagger
+>
+    打包spring-boot工程并发布
+    打包springmvc工程并发布
+    配置nginx实现API中央服务器、转发、跨域配置等统一管理
