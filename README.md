@@ -1,5 +1,8 @@
 ## j360-dubbo-app-all
 
+[![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![Build Status](https://travis-ci.org/xuminwlt/j360-dubbo-app-all.svg?branch=master)](https://travis-ci.org/xuminwlt/j360-dubbo-app-all)
+
 参考《阿里巴巴开发规范1.0》的基于dubbo的rpc案例的完整工程
 
 基于dubbo的分布式工程使用demo,内容未完全完成,逐步补充
